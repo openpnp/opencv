@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
   <packaging>bundle</packaging>
   <groupId>org.openpnp</groupId>
@@ -12,303 +12,302 @@
   <description>OpenCV packaged with native libraries and loader for multiple platforms.</description>
   <url>http://github.com/openpnp/opencv</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
-  <profiles>
-    <profile>
-      <id>jdk-8</id>
-      <activation>
-        <jdk>1.8</jdk>
-      </activation>
-      <properties>
-        <!-- OpenCV's Javadocs fail DocLint tests. See http://stackoverflow.com/a/16743137 for tip. -->
-        <javadoc.parameters>-Xdoclint:none</javadoc.parameters>
-      </properties>
-    </profile>
+	<profiles>
+		<profile>
+			<id>jdk-8</id>
+			<activation>
+				<jdk>1.8</jdk>
+			</activation>
+			<properties>
+				<!-- OpenCV's Javadocs fail DocLint tests. See http://stackoverflow.com/a/16743137 
+					for tip. -->
+				<javadoc.parameters>-Xdoclint:none</javadoc.parameters>
+			</properties>
+		</profile>
 
-    <profile>
-      <id>release-sign-artifacts</id>
-      <activation>
-        <property>
-          <name>gpg.sign</name>
-          <value>true</value>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.4</version>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-                <configuration>
-                  <useAgent>false</useAgent>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
+		<profile>
+			<id>release-sign-artifacts</id>
+			<activation>
+				<property>
+					<name>gpg.sign</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.4</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+								<configuration>
+									<useAgent>false</useAgent>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
-  <licenses>
-    <license>
-      <name>BSD License</name>
-      <url>http://github.com/Itseez/opencv/raw/master/LICENSE</url>
-    </license>
-  </licenses>
+	<licenses>
+		<license>
+			<name>BSD License</name>
+			<url>http://github.com/Itseez/opencv/raw/master/LICENSE</url>
+		</license>
+	</licenses>
 
-  <scm>
-    <url>http://github.com/openpnp/opencv</url>
-    <connection>scm:git:http://github.com/openpnp/opencv.git</connection>
-    <developerConnection>scm:git:http://github.com/openpnp/opencv.git</developerConnection>
-    <tag>v3.2.0-1</tag>
-  </scm>
+	<scm>
+		<url>http://github.com/openpnp/opencv</url>
+		<connection>scm:git:http://github.com/openpnp/opencv.git</connection>
+		<developerConnection>scm:git:http://github.com/openpnp/opencv.git</developerConnection>
+		<tag>v3.2.0-1</tag>
+	</scm>
 
-  <issueManagement>
-    <system>GitHub</system>
-    <url>http://github.com/openpnp/opencv/issues</url>
-  </issueManagement>
+	<issueManagement>
+		<system>GitHub</system>
+		<url>http://github.com/openpnp/opencv/issues</url>
+	</issueManagement>
 
-  <developers>
-    <developer>
-      <id>vonnieda</id>
-      <name>Jason von Nieda</name>
-      <email>jason@vonnieda.org</email>
-      <organization>OpenPnP</organization>
-      <organizationUrl>http://openpnp.org</organizationUrl>
-      <roles>
-        <role>maintainer</role>
-      </roles>
-    </developer>
-    <developer>
-      <id>michaelahlers</id>
-      <name>Michael Ahlers</name>
-      <email>michael.ahlers@pattern.nu</email>
-      <organization>Pattern</organization>
-      <organizationUrl>http://pattern.nu</organizationUrl>
-      <roles>
-        <role>maintainer</role>
-      </roles>
-      <!--<properties>
-        <picUrl>http://pattern.nu/images/team/michael.ahlers.png</picUrl>
-      </properties>-->
-    </developer>
-  </developers>
+	<developers>
+		<developer>
+			<id>vonnieda</id>
+			<name>Jason von Nieda</name>
+			<email>jason@vonnieda.org</email>
+			<organization>OpenPnP</organization>
+			<organizationUrl>http://openpnp.org</organizationUrl>
+			<roles>
+				<role>maintainer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>michaelahlers</id>
+			<name>Michael Ahlers</name>
+			<email>michael.ahlers@pattern.nu</email>
+			<organization>Pattern</organization>
+			<organizationUrl>http://pattern.nu</organizationUrl>
+			<roles>
+				<role>maintainer</role>
+			</roles>
+			<!--<properties> <picUrl>http://pattern.nu/images/team/michael.ahlers.png</picUrl> 
+				</properties> -->
+		</developer>
+	</developers>
 
 	<distributionManagement>
-	  <snapshotRepository>
-	    <id>ossrh</id>
-	    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-	  </snapshotRepository>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
 	</distributionManagement>
 
-  <build>
-    <plugins>
-    
-	    <plugin>
-	      <groupId>org.sonatype.plugins</groupId>
-	      <artifactId>nexus-staging-maven-plugin</artifactId>
-	      <version>1.6.3</version>
-	      <extensions>true</extensions>
-	      <configuration>
-	        <serverId>ossrh</serverId>
-	        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-	        <autoReleaseAfterClose>false</autoReleaseAfterClose>
-	      </configuration>
-	    </plugin>
+	<build>
+		<plugins>
 
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <Export-Package>nu.pattern.*, org.opencv.*</Export-Package>
-            <Import-Package>!sun.reflect.*</Import-Package>
-          </instructions>
-        </configuration>
-      </plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.3</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>false</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Export-Package>nu.pattern.*, org.opencv.*</Export-Package>
+						<Import-Package>!sun.reflect.*</Import-Package>
+					</instructions>
+				</configuration>
+			</plugin>
 
 
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-        </configuration>
-      </plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
 
-      <!-- Extracts the compiled Java classes and sources built by the OpenCV project. Avoids any manual process which may introduce errors. -->
-      <plugin>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.3</version>
-        <executions>
-          <execution>
-            <phase>generate-sources</phase>
-            <configuration>
-              <tasks>
-                <echo>Extracting Java classes.</echo>
-                <unjar src="${project.basedir}/upstream/opencv-430.jar" dest="${project.build.directory}/classes">
-                  <patternset>
-                    <include name="**/*.class"/>
-                  </patternset>
-                </unjar>
+			<!-- Extracts the compiled Java classes and sources built by the OpenCV 
+				project. Avoids any manual process which may introduce errors. -->
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.3</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<configuration>
+							<tasks>
+								<echo>Extracting Java classes.</echo>
+								<unjar src="${project.basedir}/upstream/opencv-430.jar"
+									dest="${project.build.directory}/classes">
+									<patternset>
+										<include name="**/*.class" />
+									</patternset>
+								</unjar>
 
-                <echo>Extracting Java test classes.</echo>
-                <unjar src="${project.basedir}/upstream/opencv-test.jar" dest="${project.build.directory}/test-classes">
-                  <patternset>
-                    <include name="**/*.class"/>
-                  </patternset>
-                </unjar>
+								<echo>Extracting Java sources.</echo>
+								<unjar src="${project.basedir}/upstream/opencv-430.jar"
+									dest="${project.build.directory}/upstream-sources">
+									<patternset>
+										<include name="**/*.java" />
+									</patternset>
+								</unjar>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-                <echo>Extracting Java sources.</echo>
-                <unjar src="${project.basedir}/upstream/opencv-430.jar" dest="${project.build.directory}/upstream-sources">
-                  <patternset>
-                    <include name="**/*.java"/>
-                  </patternset>
-                </unjar>
-              </tasks>
-            </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+			<!-- The upstream sources should be included in the source JAR, but not 
+				the binary JAR. Ensure upstream-sources is added after the compile phase 
+				and before package. -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${project.build.directory}/upstream-sources</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 
-      <!-- The upstream sources should be included in the source JAR, but not the binary JAR. Ensure upstream-sources is added after the compile phase and before package. -->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>build-helper-maven-plugin</artifactId>
-        <version>1.8</version>
-        <executions>
-          <execution>
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>add-source</goal>
-            </goals>
-            <configuration>
-              <sources>
-                <source>${project.build.directory}/upstream-sources</source>
-              </sources>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+			<!-- Package local and upstream sources. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-      <!-- Package local and upstream sources. -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <version>2.2.1</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.12.4</version>
+				<configuration>
+					<systemProperties>
+						<property>
+							<name>java.util.logging.config.file</name>
+							<value>${project.build.directory}/test-classes/logging.properties</value>
+						</property>
+					</systemProperties>
+					<!-- It's preferred to keep all upstream resources contained in a single 
+						location. Since the test classes use the working directory to find their 
+						fixtures, it's necessary to specify this location at test time. -->
+					<workingDirectory>${project.basedir}/upstream</workingDirectory>
+					<excludes>
+						<!-- Contains no test cases (it's the base class for others, however), 
+							so it must be excluded to avoid failrues. -->
+						<exclude>**/OpenCVTestCase.*</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
 
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.12.4</version>
-        <configuration>
-          <systemProperties>
-            <property>
-              <name>java.util.logging.config.file</name>
-              <value>${project.build.directory}/test-classes/logging.properties</value>
-            </property>
-          </systemProperties>
-          <properties>
-            <!-- Bootstrap the test classes with the extracted library, if applicable. -->
-            <property>
-              <name>listener</name>
-              <value>nu.pattern.LoadLibraryRunListener</value>
-            </property>
-          </properties>
-          <!-- It's preferred to keep all upstream resources contained in a single location. Since the test classes use the working directory to find their fixtures, it's necessary to specify this location at test time. -->
-          <workingDirectory>${project.basedir}/upstream</workingDirectory>
-          <excludes>
-            <!-- Contains no test cases (it's the base class for others, however), so it must be excluded to avoid failrues. -->
-            <exclude>**/OpenCVTestCase.*</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<links>
+						<link>http://docs.opencv.org/java/</link>
+						<link>http://docs.oracle.com/javase/8/docs/api/</link>
+					</links>
+					<additionalparam>${javadoc.parameters}</additionalparam>
+				</configuration>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.maven.plugins
+										</groupId>
+										<artifactId>
+											maven-antrun-plugin
+										</artifactId>
+										<versionRange>[1.3,)</versionRange>
+										<goals>
+											<goal>run</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.9.1</version>
-        <executions>
-          <execution>
-            <id>attach-javadocs</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <links>
-            <link>http://docs.opencv.org/java/</link>
-            <link>http://docs.oracle.com/javase/8/docs/api/</link>
-          </links>
-          <additionalparam>${javadoc.parameters}</additionalparam>
-        </configuration>
-      </plugin>
-    </plugins>
-    <pluginManagement>
-    	<plugins>
-    		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-    		<plugin>
-    			<groupId>org.eclipse.m2e</groupId>
-    			<artifactId>lifecycle-mapping</artifactId>
-    			<version>1.0.0</version>
-    			<configuration>
-    				<lifecycleMappingMetadata>
-    					<pluginExecutions>
-    						<pluginExecution>
-    							<pluginExecutionFilter>
-    								<groupId>
-    									org.apache.maven.plugins
-    								</groupId>
-    								<artifactId>
-    									maven-antrun-plugin
-    								</artifactId>
-    								<versionRange>[1.3,)</versionRange>
-    								<goals>
-    									<goal>run</goal>
-    								</goals>
-    							</pluginExecutionFilter>
-    							<action>
-    								<ignore></ignore>
-    							</action>
-    						</pluginExecution>
-    					</pluginExecutions>
-    				</lifecycleMappingMetadata>
-    			</configuration>
-    		</plugin>
-    	</plugins>
-    </pluginManagement>
-  </build>
-
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-
+	<dependencies>
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna</artifactId>
+			<version>5.5.0</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 </project>
