@@ -1,17 +1,18 @@
 language: java
+dist: bionic
 arch:
-  - amd64
+#  - amd64
   - arm64
 os:
   - linux
-  - osx
+#  - osx
 #  - windows
 
 env:
-  - ARCH=x64
-  - ARCH=x32
-  - ARCH=arm64
+#  - ARCH=x64
+#  - ARCH=x32
+#  - ARCH=arm64
 
 jdk:
-  - oraclejdk8
-  - oraclejdk11
+  - openjdk8 
+#  - oraclejdk11
