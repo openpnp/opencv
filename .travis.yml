@@ -1,5 +1,7 @@
 language: java
 dist: bionic
+git:
+  depth: 1
 arch:
 #  - amd64
   - arm64
@@ -8,11 +10,11 @@ os:
 #  - osx
 #  - windows
 
-env:
+#env:
 #  - ARCH=x64
 #  - ARCH=x32
 #  - ARCH=arm64
 
-jdk:
-  - openjdk8 
+#jdk:
+#  - openjdk8 
 #  - oraclejdk11
