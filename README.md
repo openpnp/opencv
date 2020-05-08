@@ -93,10 +93,6 @@ Developers wishing to use the Java API for OpenCV would typically go through the
 
 Apart from testing, this package deliberately specifies no external dependencies. It does, however, make use of modern Java APIs (such as [Java NIO](http://docs.oracle.com/javase/tutorial/essential/io/fileio.html)).
 
-## Contributing
-
-Producing native binaries is the most cumbersome process in maintaining this package. If you can contribute binaries _for the current version_, please make a pull request including the build artifacts and any platform definitions in `nu.pattern.OpenCV`.
-
 ## Support
 
 The following platforms are supported by this package:
@@ -106,6 +102,7 @@ OS | Architecture
 OS X | x86_32
 OS X | x86_64
 Linux | x86_64
+Linux | ARM_64 (AARCH64)
 Windows | x86_32
 Windows | x86_64
 

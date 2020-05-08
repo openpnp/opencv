@@ -1,14 +1,17 @@
-branches:
-  only:
-    - master
-    - develop
-
 language: java
+arch:
+  - amd64
+  - arm64
+os:
+  - linux
+  - osx
+#  - windows
 
 env:
   - ARCH=x64
   - ARCH=x32
+  - ARCH=arm64
 
 jdk:
   - oraclejdk8
-  - oraclejdk7
+  - oraclejdk11

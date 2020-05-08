@@ -67,7 +67,7 @@ public class OpenCV {
   static enum Arch {
     X86_32("i386", "i686", "x86"),
     X86_64("amd64", "x86_64"),
-	  ARMv8("arm");
+    ARMv8("aarch64", "arm64");
 
     private final Set<String> patterns;
 
