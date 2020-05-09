@@ -2,7 +2,7 @@
 
 echo "Building for OpenCV $OPENCV_VERSION-$OPENCV_OPNP_REV on: \n `uname -a` \n"
 
-cd opencv/opencv-$OPENCV_VERSION/target/ARMv8
+cd opencv/opencv-$OPENCV_VERSION/target/linux/ARMv8
 cmake -D BUILD_SHARED_LIBS=OFF \
 #            -D WITH_EIGEN=OFF \
 #            -D WITH_FFMPEG=OFF \
