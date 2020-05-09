@@ -53,7 +53,8 @@ addons:
     - libmpfrc++-dev
 
 before_script:
-    - mkdir -p opencv && cd opencv && wget https://github.com/opencv/opencv/archive/opencv-$OPENCV_VERSION.zip
+    #https://github.com/opencv/opencv/archive/4.3.0.zip
+    - mkdir -p opencv && cd opencv && wget https://github.com/opencv/opencv/archive/$OPENCV_VERSION.zip
     - unzip opencv-$OPENCV_VERSION.zip && mv opencv-$OPENCV_VERSION opencv-$OPENCV_VERSION-$OPENCV_OPNP_REV && rm *.zip
 #    - git clone --branch $OPENCV_VERSION --single-branch --depth 1 \
 #               https://github.com/opencv/opencv opencv/opencv-$OPENCV_VERSION
