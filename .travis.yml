@@ -54,7 +54,7 @@ addons:
 
 before_script:
     - mkdir -p opencv && cd opencv && wget https://github.com/opencv/opencv/archive/$OPENCV_VERSION.zip
-    - unzip $OPENCV_VERSION.zip && mv opencv-$OPENCV_VERSION opencv-$OPENCV_VERSION-$OPENCV_OPNP_REV && rm *.zip
+    - unzip $OPENCV_VERSION.zip && rm *.zip
     - cd .. && ./create-targets.sh $OPENCV_VERSION
 
 script: ./ci/build.sh
