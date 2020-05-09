@@ -30,6 +30,7 @@ addons:
     - cmake
     - ant
     - maven
+    - unzip
     - libgtk-3-dev
     - libavcodec-dev
     - libavformat-dev
@@ -52,9 +53,14 @@ addons:
     - libmpfrc++-dev
 
 before_script:
-    - mkdir -p opencv
-    - git clone --branch $OPENCV_VERSION --single-branch --depth 1 https://github.com/opencv/opencv opencv-$OPENCV_VERSION
-    - ./create-targets.sh $OPENCV_VERSION-$OPENCV_OPNP_REV
+    - mkdir -p opencv && cd opencv && \
+      wget https://github.com/opencv/opencv/archive/opencv-$OPENCV_VERSION.zip
+    - unzip opencv-$OPENCV_VERSION.zip && \
+      mv opencv-$OPENCV_VERSION opencv-$OPENCV_VERSION-$OPENCV_OPNP_REV
+#    - git clone --branch $OPENCV_VERSION --single-branch --depth 1 \
+#               https://github.com/opencv/opencv opencv/opencv-$OPENCV_VERSION
+#    - ./create-targets.sh $OPENCV_VERSION-$OPENCV_OPNP_REV
+    - ./create-targets.sh $OPENCV_VERSION
 
 script: ./ci/build.sh
 
