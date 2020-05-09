@@ -1,5 +1,8 @@
 language: java
 dist: bionic
+env:
+    - OPENCV_VERSION: 4.3.0
+    - OPENCV_OPNP_REV: 2
 git:
   depth: 1
 arch:
@@ -9,6 +12,58 @@ os:
   - linux
 #  - osx
 #  - windows
+
+jobs:
+  fast_finish: true
+  include:
+#  - os: linux
+#    arch: amd64
+  - os: linux
+    arch: arm64
+#  - os: osx
+addons:
+  apt:
+    packages:
+    - build-essential
+    - pkg-config
+    - cmake
+    - ant
+    - maven
+    - libgtk-3-dev
+    - libavcodec-dev
+    - libavformat-dev
+    - libswscale-dev
+    - libv4l-0
+    - libv4l-dev
+    - libxvidcore-dev
+    - libx264-dev
+    - libjpeg-dev
+    - libpng-dev
+    - libtiff-dev
+    - libatlas-base-dev
+    - python3-dev
+    - python3-numpy
+    - libgstreamer1.0-dev
+    - libgstreamer-plugins-base1.0-dev
+    - libopenblas-dev
+    - liblapack-dev
+    - libeigen3-dev
+    - libmpfrc++-dev
+
+before_script:
+    - mkdir -p opencv
+    - git clone --branch $OPENCV_VERSION --single-branch --depth 1 https://github.com/opencv/opencv opencv-$OPENCV_VERSION
+    - ./create-targets.sh $OPENCV_VERSION-$OPENCV_OPNP_REV
+
+script:
+    - cd opencv/opencv-$OPENCV_VERSION/target/ARMv8
+    - cmake -D BUILD_SHARED_LIBS=OFF \
+#            -D WITH_EIGEN=OFF \
+#            -D WITH_FFMPEG=OFF \
+            -D WITH_JAVA=ON
+    - make -j8
+    - cd ../../.. && ./copy-resources $OPENCV_VERSION-$OPENCV_OPNP_REV
+    - mvn clean test
 
 #env:
 #  - ARCH=x64
