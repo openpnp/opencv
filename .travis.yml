@@ -55,15 +55,7 @@ before_script:
     - git clone --branch $OPENCV_VERSION --single-branch --depth 1 https://github.com/opencv/opencv opencv-$OPENCV_VERSION
     - ./create-targets.sh $OPENCV_VERSION-$OPENCV_OPNP_REV
 
-script:
-    - cd opencv/opencv-$OPENCV_VERSION/target/ARMv8
-    - cmake -D BUILD_SHARED_LIBS=OFF \
-#            -D WITH_EIGEN=OFF \
-#            -D WITH_FFMPEG=OFF \
-            -D WITH_JAVA=ON
-    - make -j8
-    - cd ../../.. && ./copy-resources $OPENCV_VERSION-$OPENCV_OPNP_REV
-    - mvn clean test
+script: ./ci/build.sh
 
 #env:
 #  - ARCH=x64
