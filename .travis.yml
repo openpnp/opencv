@@ -67,3 +67,7 @@ script: ./ci/build.sh
 #jdk:
 #  - openjdk8 
 #  - oraclejdk11
+#
+notifications:
+  email: false
+
