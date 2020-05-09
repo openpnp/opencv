@@ -1,8 +1,9 @@
 language: java
 dist: bionic
 env:
-    - OPENCV_VERSION: 4.3.0
-    - OPENCV_OPNP_REV: 2
+    global:
+        - OPENCV_VERSION=4.3.0
+        - OPENCV_OPNP_REV=2
 git:
   depth: 1
 arch:
