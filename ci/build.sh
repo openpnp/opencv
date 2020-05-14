@@ -34,6 +34,6 @@ cmake -D BUILD_SHARED_LIBS=OFF \
 make -j8
 
 echo "Copy OpenCV resources\n"
-cd ../../../.. && ./copy-resources.sh $OPENCV_VERSION
+cd ../../../../.. && ./copy-resources.sh $OPENCV_VERSION
 
 mvn clean test
