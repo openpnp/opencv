@@ -15,7 +15,8 @@ ln -sf /usr/lib/$MACHINE_NAME-linux-gnu/jni/libjnidispatch.system.so /usr/lib/$M
 wget https://corretto.aws/downloads/latest/amazon-corretto-11-$MACHINE_NAME-linux-jdk.deb && dpkg -i *.deb && rm *.deb
 
 cd opencv/opencv-$OPENCV_VERSION/target/linux/ARMv8
-cmake -D BUILD_SHARED_LIBS=OFF -D WITH_EIGEN=OFF -D WITH_FFMPEG=OFF -D WITH_JAVA=ON ../../..
+cmake -D BUILD_SHARED_LIBS=OFF -D WITH_EIGEN=OFF -D WITH_FFMPEG=OFF -D BUILD_TESTING=OFF -D WITH_JAVA=ON ../../..
 make -j8
-cd ../../.. && ./copy-resources.sh $OPENCV_VERSION
+pwd
+cd ../../.. && pwd && ls -alh && find / -type f -iname "copy-resources.sh" && find /usr/lib -type f -iname "libjnidispatch*.*" && ./copy-resources.sh $OPENCV_VERSION
 mvn clean test
