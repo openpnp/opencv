@@ -34,11 +34,6 @@ cmake -D BUILD_SHARED_LIBS=OFF \
 make -j8
 
 echo "Copy OpenCV resources\n"
-pwd && ls -alh
-cd ../../.. \
-   && pwd && ls -alh \
-   && find / -type f -iname "copy-resources.sh" \
-   && find /usr/lib -type f -iname "libjnidispatch*.*" \
-   && ./copy-resources.sh $OPENCV_VERSION
+cd ../../../.. && ./copy-resources.sh $OPENCV_VERSION
 
 mvn clean test
