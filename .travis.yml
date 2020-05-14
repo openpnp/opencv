@@ -53,7 +53,7 @@ addons:
     - libeigen3-dev
     - libmpfrc++-dev
     # OpenCV
-#    - opencv
+    - opencv
 #    - libopencv-features2d4.2
 #    - libopencv-imgcodecs4.2
 #    - libopencv-imgproc4.2

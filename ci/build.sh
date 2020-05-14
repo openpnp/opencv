@@ -15,7 +15,7 @@ sudo ln -sf /usr/lib/$MACHINE_NAME-linux-gnu/jni/libjnidispatch.system.so \
 
 # Get and install a proper JVM
 wget https://corretto.aws/downloads/latest/amazon-corretto-11-$MACHINE_NAME-linux-jdk.deb \
-     && dpkg -i *.deb \
+     && sudo dpkg -i *.deb \
      && rm *.deb
 
 # XXX: ARMv8 for conditional folder detection
