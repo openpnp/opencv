@@ -46,28 +46,13 @@ addons:
     - libatlas-base-dev
     - python3-dev
     - python3-numpy
+    - python3-opencv
     - libgstreamer1.0-dev
     - libgstreamer-plugins-base1.0-dev
     - libopenblas-dev
     - liblapack-dev
     - libeigen3-dev
     - libmpfrc++-dev
-    # OpenCV
-    - opencv
-#    - libopencv-features2d4.2
-#    - libopencv-imgcodecs4.2
-#    - libopencv-imgproc4.2
-#    - libopencv-ml4.2
-#    - libopencv-objdetect4.2
-#    - libopencv-photo4.2
-#    - libopencv-shape4.2
-#    - libopencv-stitching4.2
-#    - libopencv-video4.2
-#    - libopencv-videoio4.2
-#    - libopencv4.2-jni
-#    - libopencv4.2-java
-#    - libopencv-viz4.2
-#    - python3-opencv
 
 before_script:
     - mkdir -p opencv && cd opencv && wget https://github.com/opencv/opencv/archive/$OPENCV_VERSION.zip
