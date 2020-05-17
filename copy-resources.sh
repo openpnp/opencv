@@ -56,3 +56,7 @@ case "$OS_NAME" in
 		cp $BASE_DIR/target/windows/opencv/build/java/x64/opencv_java$SHORT_VERSION.dll \
 		   src/main/resources/nu/pattern/opencv/windows/x86_64
 	;;
+	*)
+		echo "Unknown OS detected"
+	;;
+esac
