@@ -31,19 +31,25 @@ case "$OS_NAME" in
 		   src/main/resources/nu/pattern/opencv/osx/x86_64
 	;;
 	Linux)
-		echo "Cleaning up Linux x86_64..."
-		rm -f src/main/resources/nu/pattern/opencv/linux/x86_64/cmake.log
-		rm -f src/main/resources/nu/pattern/opencv/linux/x86_64/*.so
-		echo "Copying Linux x86_64..."
-		cp $BASE_DIR/target/linux/x86_64/cmake.log src/main/resources/nu/pattern/opencv/linux/x86_64
-		cp $BASE_DIR/target/linux/x86_64/lib/libopencv_java$SHORT_VERSION.so \
-		   src/main/resources/nu/pattern/opencv/linux/x86_64
-
-		echo "Cleaning up Linux ARMv8..."
-		rm -f src/main/resources/nu/pattern/opencv/linux/ARMv8/*.so
-		echo "Copying Linux ARMv8..."
-		cp $BASE_DIR/target/linux/ARMv8/lib/libopencv_java$SHORT_VERSION.so \
-		   src/main/resources/nu/pattern/opencv/linux/ARMv8
+		case "$MACHINE_NAME" in
+			x86_64)
+				echo "Cleaning up Linux x86_64..."
+				rm -f src/main/resources/nu/pattern/opencv/linux/x86_64/cmake.log
+				rm -f src/main/resources/nu/pattern/opencv/linux/x86_64/*.so
+				echo "Copying Linux x86_64..."
+				cp $BASE_DIR/target/linux/x86_64/cmake.log \
+				   src/main/resources/nu/pattern/opencv/linux/x86_64
+				cp $BASE_DIR/target/linux/x86_64/lib/libopencv_java$SHORT_VERSION.so \
+				   src/main/resources/nu/pattern/opencv/linux/x86_64
+			;;
+			aarch64)
+				echo "Cleaning up Linux ARMv8..."
+				rm -f src/main/resources/nu/pattern/opencv/linux/ARMv8/*.so
+				echo "Copying Linux ARMv8..."
+				cp $BASE_DIR/target/linux/ARMv8/lib/libopencv_java$SHORT_VERSION.so \
+				   src/main/resources/nu/pattern/opencv/linux/ARMv8
+				;;
+		esac
 	;;
 	Windows)
 		# Windows

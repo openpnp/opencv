@@ -33,6 +33,11 @@ cmake -D BUILD_SHARED_LIBS=OFF \
       -D WITH_JAVA=ON ../../..
 make -j8
 
+# Find that resulting opencv430.jar and libopencv_java430.so, should be under "upstream" folder
+echo "Looking up for JNA-JNI related objects"
+find ../../../../.. -iname "opencv-*.jar"
+find ../../../../.. -iname "libopencv_java*.*"
+
 echo "Copy OpenCV resources\n"
 cd ../../../../.. && ./copy-resources.sh $OPENCV_VERSION
 
