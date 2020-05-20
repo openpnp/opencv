@@ -54,10 +54,10 @@ addons:
     - libeigen3-dev
     - libmpfrc++-dev
 
-before_script:
-    - mkdir -p opencv && cd opencv && wget https://github.com/opencv/opencv/archive/$OPENCV_VERSION.zip
-    - unzip $OPENCV_VERSION.zip && rm *.zip
-    - cd .. && ./create-targets.sh $OPENCV_VERSION
+#before_script:
+#    - wget https://github.com/opencv/opencv/archive/$OPENCV_VERSION.zip
+#    - unzip $OPENCV_VERSION.zip && rm *.zip
+#    - cd .. && ./create-targets.sh $OPENCV_VERSION
 
 script: ./ci/build.sh
 

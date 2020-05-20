@@ -19,7 +19,7 @@ wget https://corretto.aws/downloads/latest/amazon-corretto-11-$MACHINE_NAME-linu
      && rm *.deb
 
 # XXX: ARMv8 for conditional folder detection
-cd opencv/opencv-$OPENCV_VERSION/target/linux/ARMv8
+cd opencv-$OPENCV_VERSION/target/linux/ARMv8
 cmake -D BUILD_SHARED_LIBS=OFF \
       -D BUILD_TESTING_SHARED=OFF \
       -D BUILD_TESTING_STATIC=OFF \
@@ -33,12 +33,13 @@ cmake -D BUILD_SHARED_LIBS=OFF \
       -D WITH_JAVA=ON ../../..
 make -j8
 
-# Find that resulting opencv430.jar and libopencv_java430.so, should be under "upstream" folder
+# Find resulting opencv430.jar and libopencv_java430.so, should be under "upstream" folder
 echo "Looking up for JNA-JNI related objects"
-find ../../../../.. -iname "opencv-*.jar"
-find ../../../../.. -iname "libopencv_java*.*"
+pwd
+find $HOME -iname "opencv-*.jar"
+find $HOME -iname "libopencv_java*.*"
 
 echo "Copy OpenCV resources\n"
-cd ../../../../.. && ./copy-resources.sh $OPENCV_VERSION
+cd ../../../.. && pwd && ./copy-resources.sh $OPENCV_VERSION
 
 mvn clean test
