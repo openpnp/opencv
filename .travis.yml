@@ -59,7 +59,7 @@ addons:
 #    - unzip $OPENCV_VERSION.zip && rm *.zip
 #    - cd .. && ./create-targets.sh $OPENCV_VERSION
 
-script: ./ci/build.sh
+script: ln -sf $HOME/opencv $HOME/opencv-$OPENCV_VERSION && ./ci/build.sh
 
 #env:
 #  - ARCH=x64
