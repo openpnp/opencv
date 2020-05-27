@@ -59,7 +59,8 @@ addons:
 #    - unzip $OPENCV_VERSION.zip && rm *.zip
 #    - cd .. && ./create-targets.sh $OPENCV_VERSION
 
-script: ln -sf $HOME/opencv $HOME/opencv-$OPENCV_VERSION && ./ci/build.sh
+# XXX: Is there a $USER/$REPO variable pair in travisci?
+script: ln -sf $HOME/build/brainstorm/opencv $HOME/build/brainstorm/opencv-$OPENCV_VERSION && ./ci/build.sh
 
 #env:
 #  - ARCH=x64

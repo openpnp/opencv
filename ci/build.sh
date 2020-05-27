@@ -18,7 +18,7 @@ wget https://corretto.aws/downloads/latest/amazon-corretto-11-$MACHINE_NAME-linu
      && sudo dpkg -i *.deb \
      && rm *.deb
 
-cd .. && pwd && find $HOME -type d -name "ARMv8"
+cd .. && ls -alh && pwd && find $HOME -type d -name "ARMv8"
 # XXX: ARMv8 for conditional folder detection
 cd opencv-$OPENCV_VERSION/target/linux/ARMv8
 cmake -D BUILD_SHARED_LIBS=OFF \
