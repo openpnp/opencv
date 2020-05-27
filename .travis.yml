@@ -54,13 +54,7 @@ addons:
     - libeigen3-dev
     - libmpfrc++-dev
 
-#before_script:
-#    - wget https://github.com/opencv/opencv/archive/$OPENCV_VERSION.zip
-#    - unzip $OPENCV_VERSION.zip && rm *.zip
-#    - cd .. && ./create-targets.sh $OPENCV_VERSION
-
-# XXX: Is there a $USER/$REPO variable pair in travisci?
-script: ln -sf $HOME/build/brainstorm/opencv $HOME/build/brainstorm/opencv-$OPENCV_VERSION && cd .. && ./create-targets.sh $OPENCV_VERSION && ./ci/build.sh
+script: ls -alh TRAVIS_BUILD_DIR && ln -sf $TRAVIS_BUILD_DIR $TRAVIS_BUILD_DIR-$OPENCV_VERSION && ./ci/build.sh $OPENCV_VERSION
 
 #env:
 #  - ARCH=x64
