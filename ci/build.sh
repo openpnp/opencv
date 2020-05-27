@@ -20,10 +20,10 @@ wget https://corretto.aws/downloads/latest/amazon-corretto-11-$MACHINE_NAME-linu
 
 # Prepare by creating target dirs
 echo "Create target dirs for $MACHINE_NAME"
-./create-targets.sh $1
+./create-targets.sh $1 && pwd
 
 # XXX: ARMv8 for conditional folder detection
-cd target/linux/ARMv8
+cd opencv-$OPENCV_VERSION/target/linux/ARMv8
 cmake -D BUILD_SHARED_LIBS=OFF \
       -D BUILD_TESTING_SHARED=OFF \
       -D BUILD_TESTING_STATIC=OFF \
