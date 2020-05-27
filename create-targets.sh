@@ -1,6 +1,6 @@
 VERSION=$1
 SHORT_VERSION=`echo $VERSION | tr -d .`
-BASE_DIR=opencv-$VERSION
+BASE_DIR=$PWD
 
 echo "Version: $VERSION"
 echo "Short Version: $SHORT_VERSION"
