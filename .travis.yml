@@ -60,7 +60,7 @@ addons:
 #    - cd .. && ./create-targets.sh $OPENCV_VERSION
 
 # XXX: Is there a $USER/$REPO variable pair in travisci?
-script: ln -sf $HOME/build/brainstorm/opencv $HOME/build/brainstorm/opencv-$OPENCV_VERSION && ./ci/build.sh
+script: ln -sf $HOME/build/brainstorm/opencv $HOME/build/brainstorm/opencv-$OPENCV_VERSION && ./create-targets.sh $OPENCV_VERSION && ./ci/build.sh
 
 #env:
 #  - ARCH=x64
