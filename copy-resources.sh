@@ -1,6 +1,6 @@
 VERSION=$1
 SHORT_VERSION=`echo $VERSION | tr -d .`
-BASE_DIR=opencv-$VERSION
+BASE_DIR=$PWD
 
 MACHINE_NAME=`uname -m`	# x86_64, aarch64...
 OS_NAME=`uname -s`		# Darwin, Linux...
