@@ -5,9 +5,6 @@ BASE_DIR=opencv-$VERSION
 MACHINE_NAME=`uname -m`	# x86_64, aarch64...
 OS_NAME=`uname -s`		# Darwin, Linux...
 
-# Prepare by creating target dirs
-./create-targets.sh $1
-
 echo "Version: $VERSION"
 echo "Short Version: $SHORT_VERSION"
 echo "Base Dir: $BASE_DIR"

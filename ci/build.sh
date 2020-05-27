@@ -18,8 +18,12 @@ wget https://corretto.aws/downloads/latest/amazon-corretto-11-$MACHINE_NAME-linu
      && sudo dpkg -i *.deb \
      && rm *.deb
 
+# Prepare by creating target dirs
+echo "Create target dirs for $MACHINE_NAME"
+./create-targets.sh $1
+
 # XXX: ARMv8 for conditional folder detection
-cd opencv-$OPENCV_VERSION/target/linux/ARMv8
+cd target/linux/ARMv8
 cmake -D BUILD_SHARED_LIBS=OFF \
       -D BUILD_TESTING_SHARED=OFF \
       -D BUILD_TESTING_STATIC=OFF \
@@ -35,11 +39,10 @@ make -j8
 
 # Find resulting opencv430.jar and libopencv_java430.so, should be under "upstream" folder
 echo "Looking up for JNA-JNI related objects"
-pwd
 find $HOME -iname "opencv-*.jar"
 find $HOME -iname "libopencv_java*.*"
 
 echo "Copy OpenCV resources\n"
-cd ../../../.. && pwd && ./copy-resources.sh $OPENCV_VERSION
+./copy-resources.sh $OPENCV_VERSION
 
 mvn clean test
