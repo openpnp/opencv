@@ -54,7 +54,7 @@ addons:
     - libeigen3-dev
     - libmpfrc++-dev
 
-script: ls -alh TRAVIS_BUILD_DIR && ln -sf $TRAVIS_BUILD_DIR $TRAVIS_BUILD_DIR-$OPENCV_VERSION && ./ci/build.sh $OPENCV_VERSION
+script: ls -alh $TRAVIS_BUILD_DIR && ln -sf $TRAVIS_BUILD_DIR $TRAVIS_BUILD_DIR-$OPENCV_VERSION && ./ci/build.sh $OPENCV_VERSION
 
 #env:
 #  - ARCH=x64
