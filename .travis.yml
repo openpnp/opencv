@@ -54,7 +54,11 @@ addons:
     - libeigen3-dev
     - libmpfrc++-dev
 
-script: ls -alh $TRAVIS_BUILD_DIR && ln -sf $TRAVIS_BUILD_DIR $TRAVIS_BUILD_DIR-$OPENCV_VERSION && ./ci/build.sh $OPENCV_VERSION
+before_script:
+    - wget https://github.com/opencv/opencv/archive/$OPENCV_VERSION.zip
+    - unzip $OPENCV_VERSION.zip && rm *.zip
+
+script: ./ci/build.sh $OPENCV_VERSION
 
 #env:
 #  - ARCH=x64
