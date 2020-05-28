@@ -45,4 +45,4 @@ find $HOME -iname "libopencv_java*.*"
 echo "Copy OpenCV resources\n"
 cd $TRAVIS_BUILD_DIR && ./copy-resources.sh $OPENCV_VERSION
 
-mvn clean test
+#mvn clean test

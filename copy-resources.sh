@@ -65,5 +65,6 @@ case "$OS_NAME" in
 	;;
 	*)
 		echo "Unknown OS detected"
+		exit -1
 	;;
 esac

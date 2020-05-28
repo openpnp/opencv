@@ -60,6 +60,20 @@ before_script:
 
 script: ./ci/build.sh $OPENCV_VERSION
 
+before_deploy: ./ci/prepare_deploy.sh $OPENCV_VERSION
+
+deploy:
+  provider: releases
+  token:
+    secure: aHxZp8BSX2ZZsbvxhe/31zWP+tIOS3ZdCr5T3LQ0MK6pN9Rn4UCflLa87Gj5Vj8H+Xmvge8SMesluDB9hkuh/Y5dGL0UGtlLbG3H75B5z1i7ng1YjNbv6TPVT6e8K3yoPbTs0v9Y9xvnqh/osOoYpI2x0IfyoU70bJZMzDrVgjk4Be+FFgeuVOvZNjNgg22QH+x1Ojt69C3Ir/tvRiNyVPuDMElqKcZCu9aCFeIq6Xw5st7yDLA4zl9ap+DGlv9p+VEwGfSaIdT5k9OCrZktHoDvr/mjbd+zfIHADZID9kldDy5WiaACOyxXvFme7CWdVCBbUMiRPGO1cSgHeEVHCRW+VOsDwuctEYfQ6ub0tB7q5yf6pgkqJrPaLBtP7raLhngyVsWPP0Pehp0RrP7S7DzzgwQTeHdxqrn6GF7SnGN8s1xq+wPMFBcooce6szhfPJOFR8ht71SxdzOIjtaIIbex/3vjYg75NtNOT7L5DqHYlH0I/IK/jpmo17lbG4Jpmp4pCXunnMs7M6ftcVjPqQMiEG6S6vKew5WHgF5OjbdY9bOZGUAOJyB8QH8H/d7GLf7hqMvUQhur2Qz8cJbed/lmKDSfvbUGZT68lYqJMPlq1YPILhX0CFc+WMaaiuuSoQ16EkzJ2cLCfGsIeLRu7eAxwDzc/ffRHHzf227DjFw=
+  file_glob: true
+  file: deploy/*
+  cleanup: false
+  edge: true
+  on:
+    all_branches: true
+    tags: true
+
 #env:
 #  - ARCH=x64
 #  - ARCH=x32
@@ -71,4 +85,3 @@ script: ./ci/build.sh $OPENCV_VERSION
 #
 notifications:
   email: false
-
