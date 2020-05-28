@@ -6,23 +6,30 @@ env:
         - OPENCV_OPNP_REV=2
 git:
   depth: 1
+
 arch:
-#  - amd64
+  - amd64
   - arm64
 os:
   - linux
-#  - osx
-#  - windows
+  - osx
+  - windows
 
 jobs:
   fast_finish: true
   include:
-#  - os: linux
-#    arch: amd64
+  - os: linux
+    arch: amd64
   - os: linux
     arch: arm64
-#  - os: osx
+  - os: osx
+  - os: windows
+
 addons:
+  homebrew:
+    packages:
+    - opencv
+    update: true
   apt:
     packages:
     - build-essential
@@ -53,6 +60,7 @@ addons:
     - liblapack-dev
     - libeigen3-dev
     - libmpfrc++-dev
+    
 
 before_script:
     - wget https://github.com/opencv/opencv/archive/$OPENCV_VERSION.zip
@@ -74,14 +82,5 @@ deploy:
     all_branches: true
     tags: true
 
-#env:
-#  - ARCH=x64
-#  - ARCH=x32
-#  - ARCH=arm64
-
-#jdk:
-#  - openjdk8 
-#  - oraclejdk11
-#
 notifications:
   email: false
