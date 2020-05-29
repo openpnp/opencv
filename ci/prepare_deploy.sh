@@ -1,4 +1,5 @@
-#!/bin/sh -x
+#!/bin/bash -x
+
 VERSION=$1
 BASE_DIR=opencv-$VERSION
 SHORT_VERSION=`echo $VERSION | tr -d .`

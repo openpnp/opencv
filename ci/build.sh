@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/bash -x
 
 MACHINE_NAME=`uname -m`
 
