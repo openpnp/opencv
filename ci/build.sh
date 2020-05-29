@@ -1,9 +1,9 @@
 #!/bin/sh -x
 
 MACHINE_NAME=`uname -m`
+
 # https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/downloads-list.html
 JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-$MACHINE_NAME-$TRAVIS_OS_NAME-jdk.deb"
-export LD_LIBRARY_PATH=/usr/lib/$MACHINE_NAME-linux-gnu/jni
 export JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto
 export ANT_HOME=/usr/bin/ant
 
@@ -11,26 +11,33 @@ echo "Building for OpenCV $OPENCV_VERSION-$OPENCV_OPNP_REV on: \n `uname -a` \n"
 
 # Apply JNI Debian hacks, avoids OpenCV's cmake going:
 # "Could NOT find JNI (missing: JAVA_AWT_LIBRARY JAVA_JVM_LIBRARY JAVA_INCLUDE_PATH ...)"
-if [ $TRAVIS_OS_NAMME == "linux" ]
+if [[ $TRAVIS_OS_NAME == "linux" ]]
 then
 	ls -alh /usr/lib/*-gnu/jni/*
 	sudo ln -sf /usr/lib/$MACHINE_NAME-linux-gnu/jni/libjnidispatch.system.so \
 				/usr/lib/$MACHINE_NAME-linux-gnu/jni/libjnidispatch.so
+	
+	export LD_LIBRARY_PATH=/usr/lib/$MACHINE_NAME-linux-gnu/jni
 fi
 
 # Get and install a proper JVM
 # Tweak for the inconsistent naming conventions between uname, AWS and TravisCI
-if [ $MACHINE_NAME == "x86_64" ]
+if [[ $MACHINE_NAME == "x86_64" ]]
 then
 	case "$TRAVIS_OS_NAME" in
-		osx) JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-macos-jdk.deb";;
-		windows) JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-$TRAVIS_OS_NAME-jdk.deb";;
-		linux) JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-$TRAVIS_OS_NAME-jdk.deb"
+		osx)		JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-macos-jdk.pkg"
+					wget $JVM_URL && sudo installer -pkg amazon-corretto-11-x64-macos-jdk.pkg -target / && rm *.pkg
+					;;
+		windows)	JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-$TRAVIS_OS_NAME-jdk.msi"
+					wget --no-check-certificate $JVM_URL
+					msiexec /i "amazon-corretto-11-x64-$TRAVIS_OS_NAME-jdk.msi"
+					choco install -y make
+					;;
+		linux)		JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-$TRAVIS_OS_NAME-jdk.deb"
+					wget $JVM_URL && sudo dpkg -i *.deb && rm *.deb
+					;;
 	esac
 fi
-
-# Download and install Corretto JDK
-wget $JVM_URL && sudo dpkg -i *.deb && rm *.deb
 
 # Prepare by creating target dirs
 echo "Create target dirs for $MACHINE_NAME"
