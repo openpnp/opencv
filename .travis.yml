@@ -1,4 +1,4 @@
-language: java
+language: shell
 dist: bionic
 env:
     global:
@@ -26,10 +26,10 @@ jobs:
   - os: windows
 
 addons:
-  homebrew:
-    packages:
-    - opencv
-    update: true
+#  homebrew:
+#    packages:
+#    - opencv
+#    update: true
   apt:
     packages:
     - build-essential

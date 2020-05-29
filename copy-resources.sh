@@ -34,12 +34,10 @@ case "$OS_NAME" in
 	Linux)
 		case "$MACHINE_NAME" in
 			x86_64)
-				echo "Cleaning up Linux x86_64..."
-				rm -f src/main/resources/nu/pattern/opencv/linux/x86_64/cmake.log
-				rm -f src/main/resources/nu/pattern/opencv/linux/x86_64/*.so
 				echo "Copying Linux x86_64..."
-				cp $BASE_DIR/target/linux/x86_64/cmake.log \
-				   src/main/resources/nu/pattern/opencv/linux/x86_64
+				find $BASE_DIR -type f -iname "cmake.log" 
+				#cp $BASE_DIR/target/linux/x86_64/cmake.log \
+				#   src/main/resources/nu/pattern/opencv/linux/x86_64
 				cp $BASE_DIR/target/linux/x86_64/lib/libopencv_java$SHORT_VERSION.so \
 				   src/main/resources/nu/pattern/opencv/linux/x86_64
 			;;

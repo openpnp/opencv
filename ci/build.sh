@@ -1,6 +1,8 @@
 #!/bin/sh -x
 
 MACHINE_NAME=`uname -m`
+# https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/downloads-list.html
+JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-$MACHINE_NAME-$TRAVIS_OS_NAME-jdk.deb"
 export LD_LIBRARY_PATH=/usr/lib/$MACHINE_NAME-linux-gnu/jni
 export JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto
 export ANT_HOME=/usr/bin/ant
@@ -14,7 +16,17 @@ sudo ln -sf /usr/lib/$MACHINE_NAME-linux-gnu/jni/libjnidispatch.system.so \
             /usr/lib/$MACHINE_NAME-linux-gnu/jni/libjnidispatch.so
 
 # Get and install a proper JVM
-wget https://corretto.aws/downloads/latest/amazon-corretto-11-$MACHINE_NAME-linux-jdk.deb \
+# Tweak for the inconsistent naming conventions between uname, AWS and TravisCI
+if [ $MACHINE_NAME == "x86_64" ]
+	case "$TRAVIS_OS_NAME" in
+		osx) JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-macos-jdk.deb";;
+		windows) JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-$TRAVIS_OS_NAME-jdk.deb";;
+		linux) JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-$TRAVIS_OS_NAME-jdk.deb"
+	esac
+fi
+
+# Download and install Corretto JDK
+wget JVM_URL \ 
      && sudo dpkg -i *.deb \
      && rm *.deb
 
@@ -45,4 +57,5 @@ find $HOME -iname "libopencv_java*.*"
 echo "Copy OpenCV resources\n"
 cd $TRAVIS_BUILD_DIR && ./copy-resources.sh $OPENCV_VERSION
 
+# XXX: This is not needed at all if we already have the bins, right?
 #mvn clean test
