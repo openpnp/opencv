@@ -11,13 +11,17 @@ echo "Building for OpenCV $OPENCV_VERSION-$OPENCV_OPNP_REV on: \n `uname -a` \n"
 
 # Apply JNI Debian hacks, avoids OpenCV's cmake going:
 # "Could NOT find JNI (missing: JAVA_AWT_LIBRARY JAVA_JVM_LIBRARY JAVA_INCLUDE_PATH ...)"
-ls -alh /usr/lib/*-gnu/jni/*
-sudo ln -sf /usr/lib/$MACHINE_NAME-linux-gnu/jni/libjnidispatch.system.so \
-            /usr/lib/$MACHINE_NAME-linux-gnu/jni/libjnidispatch.so
+if [ $TRAVIS_OS_NAMME == "linux" ]
+then
+	ls -alh /usr/lib/*-gnu/jni/*
+	sudo ln -sf /usr/lib/$MACHINE_NAME-linux-gnu/jni/libjnidispatch.system.so \
+				/usr/lib/$MACHINE_NAME-linux-gnu/jni/libjnidispatch.so
+fi
 
 # Get and install a proper JVM
 # Tweak for the inconsistent naming conventions between uname, AWS and TravisCI
 if [ $MACHINE_NAME == "x86_64" ]
+then
 	case "$TRAVIS_OS_NAME" in
 		osx) JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-macos-jdk.deb";;
 		windows) JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-$TRAVIS_OS_NAME-jdk.deb";;
@@ -26,9 +30,7 @@ if [ $MACHINE_NAME == "x86_64" ]
 fi
 
 # Download and install Corretto JDK
-wget JVM_URL \ 
-     && sudo dpkg -i *.deb \
-     && rm *.deb
+wget $JVM_URL && sudo dpkg -i *.deb && rm *.deb
 
 # Prepare by creating target dirs
 echo "Create target dirs for $MACHINE_NAME"
