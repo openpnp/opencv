@@ -30,13 +30,17 @@ then
 					;;
 		windows)	JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-$TRAVIS_OS_NAME-jdk.msi"
 					wget --no-check-certificate $JVM_URL
-					msiexec /i "amazon-corretto-11-x64-$TRAVIS_OS_NAME-jdk.msi"
+					#msiexec /i "amazon-corretto-11-x64-$TRAVIS_OS_NAME-jdk.msi"
+					#https://silent-install.net/software/amazon/corretto/11.0.6.10
+					amazon-corretto-11-x64-$TRAVIS_OS_NAME-jdk.msi /qn /L* "%temp%\Amazon Corretto 11.0.6.10.log" /norestart ALLUSERS=2
 					choco install -y make
 					;;
 		linux)		JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-$TRAVIS_OS_NAME-jdk.deb"
 					wget $JVM_URL && sudo dpkg -i *.deb && rm *.deb
 					;;
 	esac
+elif [[ $MACHINE_NAME == "aarch64" ]]
+	wget $JVM_URL && sudo dpkg -i *.deb && rm *.deb
 fi
 
 # Prepare by creating target dirs
