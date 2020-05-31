@@ -26,10 +26,11 @@ jobs:
   - os: windows
 
 addons:
-#  homebrew:
-#    packages:
-#    - opencv
-#    update: true
+  homebrew:
+    packages:
+    - ant
+    #- opencv
+    update: true
   apt:
     packages:
     - build-essential
