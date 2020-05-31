@@ -8,4 +8,4 @@ echo "Version: $VERSION"
 echo "Short Version: $SHORT_VERSION"
 echo "Base Dir: $BASE_DIR"
 
-mkdir -p $BASE_DIR/target/$TRAVIS_OS_NAME/$TRAVIS_MACHINE_NAME
+mkdir -p $BASE_DIR/target/$TRAVIS_OS_NAME/$TRAVIS_CPU_ARCH

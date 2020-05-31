@@ -1,10 +1,7 @@
 #!/bin/bash -x
 
-MACHINE_NAME=`uname -m`
-
 # https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/downloads-list.html
-JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-$MACHINE_NAME-$TRAVIS_OS_NAME-jdk.deb"
-export ANT_HOME=/usr/bin/ant
+JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-$TRAVIS_CPU_ARCH-$TRAVIS_OS_NAME-jdk.deb"
 
 echo "Building for OpenCV $OPENCV_VERSION-$OPENCV_OPNP_REV on: \n `uname -a` \n"
 
@@ -13,15 +10,15 @@ echo "Building for OpenCV $OPENCV_VERSION-$OPENCV_OPNP_REV on: \n `uname -a` \n"
 if [[ $TRAVIS_OS_NAME == "linux" ]]
 then
 	ls -alh /usr/lib/*-gnu/jni/*
-	sudo ln -sf /usr/lib/$MACHINE_NAME-linux-gnu/jni/libjnidispatch.system.so \
-				/usr/lib/$MACHINE_NAME-linux-gnu/jni/libjnidispatch.so
+	sudo ln -sf /usr/lib/$TRAVIS_CPU_ARCH-linux-gnu/jni/libjnidispatch.system.so \
+				/usr/lib/$TRAVIS_CPU_ARCH-linux-gnu/jni/libjnidispatch.so
 	
-	export LD_LIBRARY_PATH=/usr/lib/$MACHINE_NAME-linux-gnu/jni
+	export LD_LIBRARY_PATH=/usr/lib/$TRAVIS_CPU_ARCH-linux-gnu/jni
 fi
 
 # Get and install a proper JVM
 # Tweak for the inconsistent naming conventions between uname, AWS and TravisCI
-if [[ $MACHINE_NAME == "x86_64" ]]
+if [[ $TRAVIS_CPU_ARCH == "x86_64" ]]
 then
 	case "$TRAVIS_OS_NAME" in
 		osx)		JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-macos-jdk.pkg"
@@ -42,16 +39,16 @@ then
 fi
 
 # The only case that follows conventions
-if [[ $MACHINE_NAME == "aarch64" ]]
+if [[ $TRAVIS_CPU_ARCH == "aarch64" ]]
 then
 	wget $JVM_URL && sudo dpkg -i *.deb && rm *.deb
 fi
 
 # Prepare by creating target dirs
-echo "Create target dirs for $MACHINE_NAME"
+echo "Create target dirs for $TRAVIS_CPU_ARCH"
 ./create-targets.sh $1 && pwd
 
-cd opencv-$OPENCV_VERSION/target/$TRAVIS_OS_NAME/$TRAVIS_MACHINE_NAME
+cd opencv-$OPENCV_VERSION/target/$TRAVIS_OS_NAME/$TRAVIS_CPU_ARCH
 cmake -D BUILD_SHARED_LIBS=OFF \
       -D BUILD_TESTING_SHARED=OFF \
       -D BUILD_TESTING_STATIC=OFF \
