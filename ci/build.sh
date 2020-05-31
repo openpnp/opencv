@@ -16,33 +16,35 @@ then
 	export LD_LIBRARY_PATH=/usr/lib/$TRAVIS_CPU_ARCH-linux-gnu/jni
 fi
 
-# Get and install a proper JVM
-# Tweak for the inconsistent naming conventions between uname, AWS and TravisCI
-if [[ $TRAVIS_CPU_ARCH == "x86_64" ]]
-then
-	case "$TRAVIS_OS_NAME" in
-		osx)		JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-macos-jdk.pkg"
-					wget $JVM_URL && sudo installer -pkg amazon-corretto-11-x64-macos-jdk.pkg -target / && rm *.pkg
-					export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-11.jdk/Contents/Home/
-					;;
-		windows)
-					choco install -y make python3
-					choco install -y corretto11jdk --version 11.0.7.10
-					#cat "C:\ProgramData\chocolatey\logs\chocolatey.log"
-					export JAVA_HOME="C:\Program Files\Amazon Corretto\jdk11.0.7.10"
-					;;
-		linux)		JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-$TRAVIS_OS_NAME-jdk.deb"
-					wget $JVM_URL && sudo dpkg -i *.deb && rm *.deb
-					export JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto
-					;;
-	esac
-fi
+# Get and install a proper JVM and deps per OS
+case $TRAVIS_CPU_ARCH in
+	amd64)
+		case "$TRAVIS_OS_NAME" in
+			osx)		
+						JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-macos-jdk.pkg"
+						wget $JVM_URL && sudo installer -pkg amazon-corretto-11-x64-macos-jdk.pkg -target / && rm *.pkg
+						export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-11.jdk/Contents/Home/
+						;;
+			windows)
+						choco install -y make python3
+						choco install -y corretto11jdk --version 11.0.7.10
+						#cat "C:\ProgramData\chocolatey\logs\chocolatey.log"
+						export JAVA_HOME="C:\Program Files\Amazon Corretto\jdk11.0.7.10"
+						;;
+			linux)		
+						JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-$TRAVIS_OS_NAME-jdk.deb"
+						wget $JVM_URL && sudo dpkg -i *.deb && rm *.deb
+						export JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto
+						;;
+		esac
+		;;
 
-# The only case that follows conventions
-if [[ $TRAVIS_CPU_ARCH == "aarch64" ]]
-then
-	wget $JVM_URL && sudo dpkg -i *.deb && rm *.deb
-fi
+	arm64)
+		JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-aarch64-$TRAVIS_OS_NAME-jdk.deb"
+		wget $JVM_URL && sudo dpkg -i *.deb && rm *.deb
+		;;
+esac
+
 
 # Prepare by creating target dirs
 echo "Create target dirs for $TRAVIS_CPU_ARCH"
