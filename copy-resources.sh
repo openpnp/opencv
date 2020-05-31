@@ -5,7 +5,7 @@ SHORT_VERSION=`echo $VERSION | tr -d .`
 BASE_DIR=opencv-$VERSION
 
 MACHINE_NAME=`uname -m`	# x86_64, aarch64...
-OS_NAME=`uname -s`		# Darwin, Linux...
+#OS_NAME=`uname -s`		# Darwin, Linux...
 
 echo "Version: $VERSION"
 echo "Short Version: $SHORT_VERSION"
@@ -17,8 +17,8 @@ rm -f upstream/*.jar
 rm -rf upstream/res/*
 
 
-case "$OS_NAME" in
-	Darwin)
+case "$TRAVIS_OS_NAME" in
+	osx)
 		# OSX
 		# We don't care about 32-bit OSX for now
 		echo "Copying Java OSX jars..."
@@ -29,30 +29,30 @@ case "$OS_NAME" in
 		rm -f src/main/resources/nu/pattern/opencv/osx/x86_64/cmake.log
 		rm -f src/main/resources/nu/pattern/opencv/osx/x86_64/*.dylib
 		echo "Copying OSX..."
-		cp $BASE_DIR/target/osx/x86_64/cmake.log src/main/resources/nu/pattern/opencv/osx/x86_64
-		cp $BASE_DIR/target/osx/x86_64/lib/libopencv_java$SHORT_VERSION.dylib \
+		#cp $BASE_DIR/target/osx/x86_64/cmake.log src/main/resources/nu/pattern/opencv/osx/x86_64
+		#cp $BASE_DIR/target/osx/x86_64/lib/libopencv_java$SHORT_VERSION.dylib \
 		   src/main/resources/nu/pattern/opencv/osx/x86_64
 	;;
-	Linux)
+	linux)
 		case "$MACHINE_NAME" in
 			x86_64)
 				echo "Copying Linux x86_64..."
 				find $BASE_DIR -type f -iname "cmake.log" 
 				#cp $BASE_DIR/target/linux/x86_64/cmake.log \
 				#   src/main/resources/nu/pattern/opencv/linux/x86_64
-				cp $BASE_DIR/target/linux/x86_64/lib/libopencv_java$SHORT_VERSION.so \
-				   src/main/resources/nu/pattern/opencv/linux/x86_64
+				#cp $BASE_DIR/target/linux/x86_64/lib/libopencv_java$SHORT_VERSION.so \
+				#   src/main/resources/nu/pattern/opencv/linux/x86_64
 			;;
 			aarch64)
 				echo "Cleaning up Linux ARMv8..."
 				rm -f src/main/resources/nu/pattern/opencv/linux/ARMv8/*.so
 				echo "Copying Linux ARMv8..."
-				cp $BASE_DIR/target/linux/ARMv8/lib/libopencv_java$SHORT_VERSION.so \
-				   src/main/resources/nu/pattern/opencv/linux/ARMv8
+				#cp $BASE_DIR/target/linux/ARMv8/lib/libopencv_java$SHORT_VERSION.so \
+				#   src/main/resources/nu/pattern/opencv/linux/ARMv8
 				;;
 		esac
 	;;
-	Windows)
+	windows)
 		# Windows
 		echo "Cleaning up Windows..."
 		rm -f src/main/resources/nu/pattern/opencv/windows/x86_32/*.dll
