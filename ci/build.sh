@@ -39,7 +39,11 @@ then
 					wget $JVM_URL && sudo dpkg -i *.deb && rm *.deb
 					;;
 	esac
-elif [[ $MACHINE_NAME == "aarch64" ]]
+fi
+
+# The only case that follows conventions
+if [[ $MACHINE_NAME == "aarch64" ]]
+then
 	wget $JVM_URL && sudo dpkg -i *.deb && rm *.deb
 fi
 
