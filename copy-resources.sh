@@ -13,6 +13,8 @@ echo "Cleaning up Java..."
 rm -f upstream/*.jar
 rm -rf upstream/res/*
 
+echo "OpenCV TEST JAR is in: "
+find $BASE_DIR -type f -iname "opencv-test.jar"
 
 case "$TRAVIS_OS_NAME" in
 	osx)
@@ -34,7 +36,7 @@ case "$TRAVIS_OS_NAME" in
 		case "$TRAVIS_CPU_ARCH" in
 			$TRAVIS_CPU_ARCH)
 				echo "Copying Linux $TRAVIS_CPU_ARCH..."
-				find $BASE_DIR -type f -iname "cmake.log"
+				find $BASE_DIR -type f -iname "*_java*.so"
 				#cp $BASE_DIR/target/$TRAVIS_OS_NAME/$TRAVIS_CPU_ARCH/cmake.log \
 				#   src/main/resources/nu/pattern/opencv/$TRAVIS_OS_NAME/$TRAVIS_CPU_ARCH
 				#cp $BASE_DIR/target/$TRAVIS_OS_NAME/$TRAVIS_CPU_ARCH/lib/libopencv_java$SHORT_VERSION.so \
@@ -44,6 +46,7 @@ case "$TRAVIS_OS_NAME" in
 				echo "Cleaning up Linux $TRAVIS_CPU_ARCH..."
 				rm -f src/main/resources/nu/pattern/opencv/$TRAVIS_OS_NAME/$TRAVIS_CPU_ARCH/*.so
 				echo "Copying Linux $TRAVIS_CPU_ARCH..."
+				find $BASE_DIR -type f -iname "*_java*.so"
 				#cp $BASE_DIR/target/$TRAVIS_OS_NAME/$TRAVIS_CPU_ARCH/lib/libopencv_java$SHORT_VERSION.so \
 				#   src/main/resources/nu/pattern/opencv/$TRAVIS_OS_NAME/$TRAVIS_CPU_ARCH
 				;;
