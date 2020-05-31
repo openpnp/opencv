@@ -36,7 +36,11 @@ case $TRAVIS_CPU_ARCH in
 						export JAVA_HOME="C:\Program Files\Amazon Corretto\jdk11.0.7_10"
 						export ANT_HOME="C:\ProgramData\chocolatey\lib\ant"
 						#powershell -NonInteractive -Command 'write("export PATH=`"" + ([Environment]::GetEnvironmentVariable("PATH","Machine") + ";" + [Environment]::GetEnvironmentVariable("PATH","User")).replace("\","/").replace("C:","/c").replace(";",":") + ":`$PATH`"")'
-						powershell -NonInteractive -Command "refreshenv"
+						#powershell -NonInteractive -Command "refreshenv"
+						#https://stackoverflow.com/questions/46758437/how-to-refresh-the-environment-of-a-powershell-session-after-a-chocolatey-instal
+						$env:ChocolateyInstall = Convert-Path "$((Get-Command choco).Path)\..\.."
+						Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+						refreshenv
 						java -version
 						python --version
 						;;
