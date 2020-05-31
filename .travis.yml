@@ -29,6 +29,8 @@ addons:
   homebrew:
     packages:
     - ant
+    - gstreamer
+    - python3
     #- opencv
     update: true
   apt:
