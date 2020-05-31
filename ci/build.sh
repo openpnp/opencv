@@ -26,10 +26,10 @@ case $TRAVIS_CPU_ARCH in
 						export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-11.jdk/Contents/Home/
 						;;
 			windows)
-						choco install -y make python3
+						choco install -y make python3 gstreamer
 						choco install -y corretto11jdk --version 11.0.7.10
 						#cat "C:\ProgramData\chocolatey\logs\chocolatey.log"
-						export JAVA_HOME="C:\Program Files\Amazon Corretto\jdk11.0.7.10"
+						export JAVA_HOME="C:\Program Files\Amazon Corretto\jdk11.0.7_10"
 						;;
 			linux)		
 						JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-$TRAVIS_OS_NAME-jdk.deb"
