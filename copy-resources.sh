@@ -19,25 +19,26 @@ rm -rf upstream/res/*
 
 case "$TRAVIS_OS_NAME" in
 	osx)
+		find $BASE_DIR -type f -iname "*.dylib"
 		# OSX
 		# We don't care about 32-bit OSX for now
-		echo "Copying Java OSX jars..."
-		cp $BASE_DIR/target/osx/x86_64/bin/opencv-$SHORT_VERSION.jar upstream
-		cp $BASE_DIR/target/osx/x86_64/java_test/build/jar/opencv-test.jar upstream
-		cp -r $BASE_DIR/target/osx/x86_64/java_test/res/* upstream/res
+		#echo "Copying Java OSX jars..."
+		#cp $BASE_DIR/target/osx/x86_64/bin/opencv-$SHORT_VERSION.jar upstream
+		#cp $BASE_DIR/target/osx/x86_64/java_test/build/jar/opencv-test.jar upstream
+		#cp -r $BASE_DIR/target/osx/x86_64/java_test/res/* upstream/res
 		echo "Cleaning up OSX..."
 		rm -f src/main/resources/nu/pattern/opencv/osx/x86_64/cmake.log
 		rm -f src/main/resources/nu/pattern/opencv/osx/x86_64/*.dylib
-		echo "Copying OSX..."
+		#echo "Copying OSX..."
 		#cp $BASE_DIR/target/osx/x86_64/cmake.log src/main/resources/nu/pattern/opencv/osx/x86_64
 		#cp $BASE_DIR/target/osx/x86_64/lib/libopencv_java$SHORT_VERSION.dylib \
-		   src/main/resources/nu/pattern/opencv/osx/x86_64
+		#   src/main/resources/nu/pattern/opencv/osx/x86_64
 	;;
 	linux)
 		case "$MACHINE_NAME" in
 			x86_64)
 				echo "Copying Linux x86_64..."
-				find $BASE_DIR -type f -iname "cmake.log" 
+				find $BASE_DIR -type f -iname "cmake.log"
 				#cp $BASE_DIR/target/linux/x86_64/cmake.log \
 				#   src/main/resources/nu/pattern/opencv/linux/x86_64
 				#cp $BASE_DIR/target/linux/x86_64/lib/libopencv_java$SHORT_VERSION.so \
@@ -53,15 +54,16 @@ case "$TRAVIS_OS_NAME" in
 		esac
 	;;
 	windows)
+		find $BASE_DIR -type f -iname "*_java*.dll"
 		# Windows
-		echo "Cleaning up Windows..."
-		rm -f src/main/resources/nu/pattern/opencv/windows/x86_32/*.dll
-		rm -f src/main/resources/nu/pattern/opencv/windows/x86_64/*.dll
-		echo "Copying Windows..."
-		cp $BASE_DIR/target/windows/opencv/build/java/x86/opencv_java$SHORT_VERSION.dll \
-		   src/main/resources/nu/pattern/opencv/windows/x86_32
-		cp $BASE_DIR/target/windows/opencv/build/java/x64/opencv_java$SHORT_VERSION.dll \
-		   src/main/resources/nu/pattern/opencv/windows/x86_64
+		#echo "Cleaning up Windows..."
+		#rm -f src/main/resources/nu/pattern/opencv/windows/x86_32/*.dll
+		#rm -f src/main/resources/nu/pattern/opencv/windows/x86_64/*.dll
+		#echo "Copying Windows..."
+		#cp $BASE_DIR/target/windows/opencv/build/java/x86/opencv_java$SHORT_VERSION.dll \
+		#   src/main/resources/nu/pattern/opencv/windows/x86_32
+		#cp $BASE_DIR/target/windows/opencv/build/java/x64/opencv_java$SHORT_VERSION.dll \
+		#   src/main/resources/nu/pattern/opencv/windows/x86_64
 	;;
 	*)
 		echo "Unknown OS detected"

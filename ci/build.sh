@@ -28,12 +28,8 @@ then
 		osx)		JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-macos-jdk.pkg"
 					wget $JVM_URL && sudo installer -pkg amazon-corretto-11-x64-macos-jdk.pkg -target / && rm *.pkg
 					;;
-		windows)	JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-$TRAVIS_OS_NAME-jdk.msi"
-					wget --no-check-certificate $JVM_URL
-					#msiexec /i "amazon-corretto-11-x64-$TRAVIS_OS_NAME-jdk.msi"
-					#https://silent-install.net/software/amazon/corretto/11.0.6.10
-					amazon-corretto-11-x64-$TRAVIS_OS_NAME-jdk.msi /qn /L* "%temp%\Amazon Corretto 11.0.6.10.log" /norestart ALLUSERS=2
-					choco install -y make
+		windows)	
+					choco install -y make corretto11jdk
 					;;
 		linux)		JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-$TRAVIS_OS_NAME-jdk.deb"
 					wget $JVM_URL && sudo dpkg -i *.deb && rm *.deb
