@@ -4,7 +4,6 @@ MACHINE_NAME=`uname -m`
 
 # https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/downloads-list.html
 JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-$MACHINE_NAME-$TRAVIS_OS_NAME-jdk.deb"
-export JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto
 export ANT_HOME=/usr/bin/ant
 
 echo "Building for OpenCV $OPENCV_VERSION-$OPENCV_OPNP_REV on: \n `uname -a` \n"
@@ -27,12 +26,18 @@ then
 	case "$TRAVIS_OS_NAME" in
 		osx)		JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-macos-jdk.pkg"
 					wget $JVM_URL && sudo installer -pkg amazon-corretto-11-x64-macos-jdk.pkg -target / && rm *.pkg
+					export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-11.jdk/Contents/Home/
 					;;
-		windows)	
-					choco install -y make corretto11jdk
+		windows)
+					choco uninstall -y python2
+					choco install -y make python3
+					choco install -y corretto11jdk --version 11.0.7.10.1
+					cat "C:\ProgramData\chocolatey\logs\chocolatey.log"
+					export JAVA_HOME="C:\Program Files\Amazon Corretto\jdk11.0.7.10.1"
 					;;
 		linux)		JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-$TRAVIS_OS_NAME-jdk.deb"
 					wget $JVM_URL && sudo dpkg -i *.deb && rm *.deb
+					export JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto
 					;;
 	esac
 fi
@@ -47,8 +52,7 @@ fi
 echo "Create target dirs for $MACHINE_NAME"
 ./create-targets.sh $1 && pwd
 
-# XXX: ARMv8 for conditional folder detection
-cd opencv-$OPENCV_VERSION/target/linux/ARMv8
+cd opencv-$OPENCV_VERSION/target/$TRAVIS_OS_NAME/$TRAVIS_MACHINE_NAME
 cmake -D BUILD_SHARED_LIBS=OFF \
       -D BUILD_TESTING_SHARED=OFF \
       -D BUILD_TESTING_STATIC=OFF \
@@ -61,11 +65,6 @@ cmake -D BUILD_SHARED_LIBS=OFF \
       -D WITH_FFMPEG=OFF \
       -D WITH_JAVA=ON ../../..
 make -j8
-
-# Find resulting opencv430.jar and libopencv_java430.so, should be under "upstream" folder
-echo "Looking up for JNA-JNI related objects"
-find $HOME -iname "opencv-*.jar"
-find $HOME -iname "libopencv_java*.*"
 
 echo "Copy OpenCV resources\n"
 cd $TRAVIS_BUILD_DIR && ./copy-resources.sh $OPENCV_VERSION
