@@ -31,7 +31,7 @@ then
 		windows)
 					choco uninstall -y python2
 					choco install -y make python3
-					choco install -y corretto11jdk --version 11.0.7.10.1
+					choco install -y corretto11jdk --version 11.0.7.10
 					cat "C:\ProgramData\chocolatey\logs\chocolatey.log"
 					export JAVA_HOME="C:\Program Files\Amazon Corretto\jdk11.0.7.10.1"
 					;;
