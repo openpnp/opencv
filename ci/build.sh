@@ -27,14 +27,16 @@ case $TRAVIS_CPU_ARCH in
 						;;
 			windows)
 						rm "C:/ProgramData/chocolatey/bin/python2.exe"
+						rm "C:/ProgramData/chocolatey/bin/python2.7.exe"
 						rm "C:/ProgramData/chocolatey/bin/python.exe"
 						rm -rf "C:/Python27"
-						choco install -y make python3 gstreamer ant
+						choco install -y make python3 numpy gstreamer ant
 						choco install -y corretto11jdk --version 11.0.7.10
 						#cat "C:\ProgramData\chocolatey\logs\chocolatey.log"
 						export JAVA_HOME="C:\Program Files\Amazon Corretto\jdk11.0.7_10"
 						export ANT_HOME="C:\ProgramData\chocolatey\lib\ant"
-						powershell -NonInteractive -Command 'write("export PATH=`"" + ([Environment]::GetEnvironmentVariable("PATH","Machine") + ";" + [Environment]::GetEnvironmentVariable("PATH","User")).replace("\","/").replace("C:","/c").replace(";",":") + ":`$PATH`"")'
+						#powershell -NonInteractive -Command 'write("export PATH=`"" + ([Environment]::GetEnvironmentVariable("PATH","Machine") + ";" + [Environment]::GetEnvironmentVariable("PATH","User")).replace("\","/").replace("C:","/c").replace(";",":") + ":`$PATH`"")'
+						powershell -NonInteractive -Command "refreshenv"
 						java -version
 						python --version
 						;;
