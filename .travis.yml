@@ -83,9 +83,12 @@ before_script:
             $msys2 pacman --sync --noconfirm --needed mingw-w64-python3-numpy
             $msys2 pacman --sync --noconfirm --needed mingw-w64-cmake
             $msys2 pacman --sync --noconfirm --needed mingw-w64-gstreamer
+            $msys2 pacman --sync --noconfirm --needed mingw-w64-openblas
             ## Install more MSYS2 packages from https://packages.msys2.org/base here
             taskkill //IM gpg-agent.exe //F  # https://travis-ci.community/t/4967
-            export PATH=/C/tools/msys64/mingw64/bin:$PATH
+            export JAVA_HOME="/c/Program Files/Amazon Corretto/jdk11.0.7_10"
+            export ANT_HOME="/c/ProgramData/chocolatey/lib/ant"
+            export PATH="/c/Python37:/c/Python37/Scripts:/c/Program Files/Amazon Corretto/jdk11.0.7_10/bin:/c/ProgramData/chocolatey/bin:/c/tools/msys64/mingw64/bin:$PATH"
             export MAKE=mingw32-make  # so that Autotools can find it
         ;;
       esac

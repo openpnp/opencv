@@ -26,17 +26,9 @@ case $TRAVIS_CPU_ARCH in
 						export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-11.jdk/Contents/Home/
 						;;
 			windows)
-						# rm "/c/ProgramData/chocolatey/bin/python2.exe"
-						# rm "/c/ProgramData/chocolatey/bin/python2.7.exe"
-						# rm "/c/ProgramData/chocolatey/bin/python.exe"
-						# rm -rf "/c/Python27"
 						choco install -y ant
 						choco install -y corretto11jdk --version 11.0.7.10
-						#cat "C:\ProgramData\chocolatey\logs\chocolatey.log"
-						export JAVA_HOME="/c/Program Files/Amazon Corretto/jdk11.0.7_10"
-						export ANT_HOME="/c/ProgramData/chocolatey/lib/ant"
-						export PATH="/c/Python37:/c/Python37/Scripts:/c/Program Files/Amazon Corretto/jdk11.0.7_10/bin:$PATH"
-						refreshenv
+						$msys2
 						java -version
 						python3 --version
 						;;
