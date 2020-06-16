@@ -26,11 +26,11 @@ case $TRAVIS_CPU_ARCH in
 						export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-11.jdk/Contents/Home/
 						;;
 			windows)
-						rm "/c/ProgramData/chocolatey/bin/python2.exe"
-						rm "/c/ProgramData/chocolatey/bin/python2.7.exe"
-						rm "/c/ProgramData/chocolatey/bin/python.exe"
-						rm -rf "/c/Python27"
-						choco install -y make python3 numpy gstreamer ant
+						# rm "/c/ProgramData/chocolatey/bin/python2.exe"
+						# rm "/c/ProgramData/chocolatey/bin/python2.7.exe"
+						# rm "/c/ProgramData/chocolatey/bin/python.exe"
+						# rm -rf "/c/Python27"
+						choco install -y make python3 ant
 						choco install -y corretto11jdk --version 11.0.7.10
 						#cat "C:\ProgramData\chocolatey\logs\chocolatey.log"
 						export JAVA_HOME="/c/Program Files/Amazon Corretto/jdk11.0.7_10"
@@ -38,7 +38,7 @@ case $TRAVIS_CPU_ARCH in
 						export PATH="/c/Python37:/c/Python37/Scripts:/c/Program Files/Amazon Corretto/jdk11.0.7_10/bin:$PATH"
 						refreshenv
 						java -version
-						python --version
+						python3 --version
 						;;
 			linux)		
 						JVM_URL="https://corretto.aws/downloads/latest/amazon-corretto-11-x64-$TRAVIS_OS_NAME-jdk.deb"
