@@ -30,7 +30,7 @@ case $TRAVIS_CPU_ARCH in
 						# rm "/c/ProgramData/chocolatey/bin/python2.7.exe"
 						# rm "/c/ProgramData/chocolatey/bin/python.exe"
 						# rm -rf "/c/Python27"
-						choco install -y make python3 ant
+						choco install -y ant
 						choco install -y corretto11jdk --version 11.0.7.10
 						#cat "C:\ProgramData\chocolatey\logs\chocolatey.log"
 						export JAVA_HOME="/c/Program Files/Amazon Corretto/jdk11.0.7_10"

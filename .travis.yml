@@ -80,7 +80,7 @@ before_script:
             export mingw64="$msys2 -mingw64 -full-path -here -c "\"\$@"\" --"
             export msys2+=" -msys2 -c "\"\$@"\" --"
             $msys2 pacman --sync --noconfirm --needed mingw-w64-x86_64-toolchain
-            $msys2 pacman --sync --noconfirm --needed mingw-w64-python-numpy
+            $msys2 pacman --sync --noconfirm --needed mingw-w64-python3-numpy
             $msys2 pacman --sync --noconfirm --needed mingw-w64-cmake
             $msys2 pacman --sync --noconfirm --needed mingw-w64-gstreamer
             ## Install more MSYS2 packages from https://packages.msys2.org/base here
