@@ -15,20 +15,30 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, ubuntu-latest, windows-latest]
+        os: [macos64-latest, macos32-latest, ubuntu-arm-latest, ubuntu64-latest, ubuntu32-latest, windows-latest, ubuntu-20.04, ubuntu-16.04]
         include:
-        - os: macos-latest
+        - os: macos64-latest
           TARGET: x86_64-apple-darwin
           COMPILER: clang
           LINKER: clang
+          
+        - os: macos32-latest
+          TARGET: x86_32-apple-darwin
+          COMPILER: clang
+          LINKER: clang
 
-        - os: ubuntu-latest
+        - os: ubuntu-arm-latest
           TARGET: armv7-unknown-linux-musleabihf
           COMPILER: arm-linux-gnueabihf-gcc-5
           LINKER: gcc-5-arm-linux-gnueabihf
 
-        - os: ubuntu-latest
+        - os: ubuntu64-latest
           TARGET: x86_64-unknown-linux-musl
+          COMPILER: gcc
+          LINKER: gcc
+        
+        - os: ubuntu32-latest
+          TARGET: x86_32-unknown-linux-musl
           COMPILER: gcc
           LINKER: gcc
 
@@ -39,4 +49,4 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Maven
-      run: mvn -B clean package --file pom.xml -Dmaven.test.skip=true
+      run: mvn -B clean package --file pom.xml -DskipTests
