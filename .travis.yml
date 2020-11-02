@@ -71,6 +71,9 @@ before_script:
     - |-
       case $TRAVIS_OS_NAME in
         windows)
+            export ADD_CMAKE_TO_PATH="System"
+            choco install -y cmake
+            choco install -y make
             [[ ! -f C:/tools/msys64/msys2_shell.cmd ]] && rm -rf C:/tools/msys64
             choco uninstall -y mingw
             choco upgrade --no-progress -y msys2
