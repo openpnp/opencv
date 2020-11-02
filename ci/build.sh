@@ -27,6 +27,7 @@ case $TRAVIS_CPU_ARCH in
 						;;
 			windows)
 						choco install -y ant
+						choco install -y unzip
 						choco install -y corretto11jdk --version 11.0.7.10
 						$msys2
 						java -version
