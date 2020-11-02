@@ -1,5 +1,7 @@
 # Releasing a New Version
 
+All the steps below are currently being scripted under `ci/` folder, this file will (hopefully) be removed soon.
+
 ## Prepare
 
 1. Download OpenCV Linux/OSX source and Windows binary release to opencv/. Should be a ZIP and a EXE.
