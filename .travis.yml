@@ -72,7 +72,7 @@ before_script:
       case $TRAVIS_OS_NAME in
         windows)
             export ADD_CMAKE_TO_PATH="System"
-            choco install -y cmake
+            choco install cmake.install -y --force --installargs '"ADD_CMAKE_TO_PATH=System"'
             choco install -y make
             choco upgrade --no-progress -y msys2
         ;;
