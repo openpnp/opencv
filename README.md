@@ -101,13 +101,16 @@ Producing native binaries is the most cumbersome process in maintaining this pac
 
 The following platforms are supported by this package:
 
+**IMPORTANT NOTE**: On Windows the Desktop Experience Feature is required because the opencv DLL is linked against several of the libraries provided by the Desktop Experience Feature.  If the Desktop Experience Feature is not installed the opencv DLL will fail to load.
+
 OS | Architecture
 --- | ---
 OS X | x86_32
 OS X | x86_64
 Linux | x86_64
-Windows | x86_32
-Windows | x86_64
+Linux | x86_32
+Windows | x86_32 (w/ Desktop Experience Feature)
+Windows | x86_64 (w/ Desktop Experience Feature)
 
 If you can help create binaries for additional platforms, please see notes under [_Contributing_](#contributing).
 
