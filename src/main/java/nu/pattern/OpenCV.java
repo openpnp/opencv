@@ -206,6 +206,17 @@ public class OpenCV {
           throw ule;
         }
 
+        /**
+         * In Java >= 12 it is no longer possible to use addLibraryPath, which modifies the
+         * ClassLoader's static usr_paths field. There does not seem to be any way around this
+         * so we fall back to loadLocally() and return.
+         */
+        if (Double.parseDouble(System.getProperty("java.specification.version")) >= 12) {
+            logger.log(Level.SEVERE, "OpenCV.loadShared() is not supported in Java >= 12. Falling back to OpenCV.loadLocally().");
+            OpenCV.loadLocally();
+            return;
+        }
+        
         /* Retain this path for cleaning up the library path later. */
         this.libraryPath = extractNativeBinary();
 

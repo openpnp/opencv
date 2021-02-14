@@ -7,7 +7,7 @@
   <packaging>bundle</packaging>
   <groupId>org.openpnp</groupId>
   <artifactId>opencv</artifactId>
-  <version>4.3.0-2</version>
+  <version>4.3.0-3</version>
   <name>OpenPnP OpenCV</name>
   <description>OpenCV packaged with native libraries and loader for multiple platforms.</description>
   <url>http://github.com/openpnp/opencv</url>
@@ -165,22 +165,20 @@
 										<include name="**/*.class" />
 									</patternset>
 								</unjar>
-
-								<echo>Extracting Java sources.</echo>
-								<unjar src="${project.basedir}/upstream/opencv-430.jar"
-									dest="${project.build.directory}/upstream-sources">
-									<patternset>
-										<include name="**/*.java" />
-									</patternset>
-								</unjar>
-							</tasks>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+                <echo>Extracting Java sources.</echo>
+                <unjar src="${project.basedir}/upstream/opencv-430.jar" dest="${project.build.directory}/upstream-sources">
+                  <patternset>
+                    <include name="**/*.java"/>
+                  </patternset>
+                </unjar>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 
 			<!-- The upstream sources should be included in the source JAR, but not 
 				the binary JAR. Ensure upstream-sources is added after the compile phase 

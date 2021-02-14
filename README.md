@@ -48,7 +48,7 @@ OpenPnP's OpenCV package is added to your project as any other dependency.
     <dependency>
       <groupId>org.openpnp</groupId>
       <artifactId>opencv</artifactId>
-      <version>4.3.0-1</version>
+      <version>4.3.0-3</version>
     </dependency>
     
     <!-- ... -->
@@ -71,6 +71,8 @@ static {
 ```
 
 Fortunately, this is unchanged except for one caveat. To use the native libraries included with this package, first call [`nu.pattern.OpenCV.loadShared()`](https://github.com/PatternConsulting/opencv/blob/master/src/main/java/nu/pattern/OpenCV.java).
+
+**Note: In Java 12+ loadShared() is not available. Use loadLocally() instead, and see notes below.**
 
 This call will—exactly once per class loader—first attempt to load from the system-wide installation (exactly as if `System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);` were called without any preceding steps). If that fails, the loader will select a binary from the package appropriate for the runtime environment's operating system and architecture. It will write that native library to a temporary directory (also defined by the environment), add that directory to `java.library.path`. _This involves writing to disk_, so consider the implications. Temporary files will be garbage-collected on clean shutdown.
 
