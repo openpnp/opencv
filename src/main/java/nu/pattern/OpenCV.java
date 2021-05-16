@@ -377,6 +377,9 @@ public class OpenCV {
           case X86_64:
             location = "/nu/pattern/opencv/osx/x86_64/libopencv_java451.dylib";
             break;
+	  case AARCH64:
+            location = "/nu/pattern/opencv/osx/AARCH64/libopencv_java451.dylib";
+            break;
           default:
             throw new UnsupportedPlatformException(os, arch);
         }
