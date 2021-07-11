@@ -42,7 +42,7 @@ jobs:
           echo "OPENCV_VERSION_SHORT=$(mvn build-helper:parse-version org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=opencv.version.short -q -DforceStdout)" >> $GITHUB_ENV
 
       - name: Build OpenCV on Arm
-        uses: uraimo/run-on-arch-action@v2.0.9
+        uses: uraimo/run-on-arch-action@v2
         with:
           arch: armv7
           distro: ubuntu18.04
