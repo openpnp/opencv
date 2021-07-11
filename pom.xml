@@ -256,7 +256,6 @@
           </excludes>
         </configuration>
       </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -270,10 +269,7 @@
           </execution>
         </executions>
         <configuration>
-          <links>
-            <link>http://docs.opencv.org/java/</link>
-            <link>http://docs.oracle.com/javase/8/docs/api/</link>
-          </links>
+          <doclint>none</doclint>
           <additionalparam>${javadoc.parameters}</additionalparam>
         </configuration>
       </plugin>

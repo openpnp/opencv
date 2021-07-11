@@ -391,7 +391,7 @@ jobs:
     strategy:
       matrix:
         os: [macos-10.15, windows-2016, windows-2019, ubuntu-20.04, ubuntu-18.04]
-        java: [8, 9, 10, 11, 12, 13, 14, 15]
+        java: [8, 11]
 
     runs-on: ${{ matrix.os }}
 
@@ -467,12 +467,9 @@ jobs:
           cp windows-2016/x64/opencv_java${{ env.OPENCV_VERSION_SHORT }}.dll src/main/resources/nu/pattern/opencv/windows/x86_64
 
       - name: Publish to Apache Maven Central
+        if: github.repository == 'openpnp/opencv' && github.repository == 'openpnp/openpnp-capture' && github.event_name == 'push' && contains(github.ref, 'refs/tags/')
         run: mvn -B -e clean deploy -P release-sign-artifacts
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
-
-
-
-
