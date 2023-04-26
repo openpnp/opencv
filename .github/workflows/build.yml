@@ -13,16 +13,16 @@
 
 name: Build OpenPnP OpenCV Distribution
 
-on: 
+on:
   push:
   pull_request:
 
 jobs:
-  build_linux_arm: 
+  build_linux_arm:
     strategy:
       matrix:
-        os: [ubuntu-18.04]
-        java: [8]
+        os: [ ubuntu-18.04 ]
+        java: [ 8 ]
 
     runs-on: ${{ matrix.os }}
 
@@ -46,8 +46,8 @@ jobs:
         with:
           arch: armv7
           distro: ubuntu18.04
-          
-           # Not required, but speeds up builds
+
+          # Not required, but speeds up builds
           githubToken: ${{ github.token }}
 
           # Create an artifacts directory
@@ -62,16 +62,20 @@ jobs:
 
           run: |
             apt-get update -q -y
-            apt-get install -q -y git wget cmake unzip build-essential default-jre default-jdk ant maven python3
-
+            apt-get install -q -y git wget cmake unzip build-essential default-jre default-jdk ant maven python3 ca-certificates
+  
             # TODO: I'd like to get this path automatically somehow. I think it might be
             # in /etc/environment but sourcing it didn't seem to work. Need to figure out
             # where it would be after starting a new shell.
             export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-armhf
-
-            wget https://github.com/opencv/opencv/archive/${{ env.OPENCV_VERSION }}.zip > /dev/null
+  
+            wget --no-check-certificate https://github.com/opencv/opencv/archive/${{ env.OPENCV_VERSION }}.zip > /dev/null
             unzip ${{ env.OPENCV_VERSION }} > /dev/null
-
+  
+            wget --no-check-certificate -O opencv_contrib-${{ env.OPENCV_VERSION }}.zip https://github.com/opencv/opencv_contrib/archive/${{ env.OPENCV_VERSION }}.zip > /dev/null
+            unzip opencv_contrib-${{ env.OPENCV_VERSION }}.zip > /dev/null
+  
+            base=${PWD}
             cd opencv-${{ env.OPENCV_VERSION }}
             mkdir build
             cd build
@@ -91,23 +95,24 @@ jobs:
               -D BUILD_opencv_apps=OFF \
               -D BUILD_opencv_gapi=OFF \
               -D CMAKE_BUILD_TYPE=RELEASE \
+              -D OPENCV_EXTRA_MODULES_PATH=${base}/opencv_contrib-${{ env.OPENCV_VERSION }}/modules ${base}/opencv-${{ env.OPENCV_VERSION }} \
               ..
             make -j4
-
+  
             # Copy the build artifacts to the /artifacts directory, which will be
             # used by the host to upload them.
             mkdir -p /artifacts/bin
             mkdir -p /artifacts/lib
             cp bin/opencv-${{ env.OPENCV_VERSION_SHORT }}.jar /artifacts/bin
             cp lib/libopencv_java${{ env.OPENCV_VERSION_SHORT }}.so /artifacts/lib
-
+  
             # And also copy the build artifacts to the repo, so we can do a test build.
             # Note that we use the repo checked out on the host so that we can use
             # actions/checkout for the Git stuff, rather than having to mess with
             # the authentication in this container.
             cp bin/opencv-${{ env.OPENCV_VERSION_SHORT }}.jar /host_repo/upstream
             cp lib/libopencv_java${{ env.OPENCV_VERSION_SHORT }}.so /host_repo/src/main/resources/nu/pattern/opencv/linux/ARMv7
-
+  
             # Peform a test build in the host repo, which now contains all of the
             # build artifacts.
             cd /host_repo
@@ -115,20 +120,19 @@ jobs:
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ubuntu-18.04-arm
           path: |
             artifacts/bin/opencv-${{ env.OPENCV_VERSION_SHORT }}.jar
             artifacts/lib/libopencv_java${{ env.OPENCV_VERSION_SHORT }}.so
+  
+  
 
-
-
-
-  build_linux_arm64: 
+  build_linux_arm64:
     strategy:
       matrix:
-        os: [ubuntu-18.04]
-        java: [15]
+        os: [ ubuntu-18.04 ]
+        java: [ 8 ]
 
     runs-on: ${{ matrix.os }}
 
@@ -152,8 +156,8 @@ jobs:
         with:
           arch: aarch64
           distro: ubuntu18.04
-          
-           # Not required, but speeds up builds
+
+          # Not required, but speeds up builds
           githubToken: ${{ github.token }}
 
           # Create an artifacts directory
@@ -168,16 +172,20 @@ jobs:
 
           run: |
             apt-get update -q -y
-            apt-get install -q -y git wget cmake unzip build-essential default-jre default-jdk ant maven python3
-
+            apt-get install -q -y git wget cmake unzip build-essential default-jre default-jdk ant maven python3 ca-certificates
+  
             # TODO: I'd like to get this path automatically somehow. I think it might be
             # in /etc/environment but sourcing it didn't seem to work. Need to figure out
             # where it would be after starting a new shell.
             export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-arm64
-
+  
             wget https://github.com/opencv/opencv/archive/${{ env.OPENCV_VERSION }}.zip > /dev/null
             unzip ${{ env.OPENCV_VERSION }} > /dev/null
-
+  
+            wget -O opencv_contrib-${{ env.OPENCV_VERSION }}.zip https://github.com/opencv/opencv_contrib/archive/${{ env.OPENCV_VERSION }}.zip > /dev/null
+            unzip opencv_contrib-${{ env.OPENCV_VERSION }}.zip > /dev/null
+  
+            base=${PWD}
             cd opencv-${{ env.OPENCV_VERSION }}
             mkdir build
             cd build
@@ -197,23 +205,24 @@ jobs:
               -D BUILD_opencv_apps=OFF \
               -D BUILD_opencv_gapi=OFF \
               -D CMAKE_BUILD_TYPE=RELEASE \
+              -D OPENCV_EXTRA_MODULES_PATH=${base}/opencv_contrib-${{ env.OPENCV_VERSION }}/modules ${base}/opencv-${{ env.OPENCV_VERSION }} \
               ..
             make -j4
-
+  
             # Copy the build artifacts to the /artifacts directory, which will be
             # used by the host to upload them.
             mkdir -p /artifacts/bin
             mkdir -p /artifacts/lib
             cp bin/opencv-${{ env.OPENCV_VERSION_SHORT }}.jar /artifacts/bin
             cp lib/libopencv_java${{ env.OPENCV_VERSION_SHORT }}.so /artifacts/lib
-
+  
             # And also copy the build artifacts to the repo, so we can do a test build.
             # Note that we use the repo checked out on the host so that we can use
             # actions/checkout for the Git stuff, rather than having to mess with
             # the authentication in this container.
             cp bin/opencv-${{ env.OPENCV_VERSION_SHORT }}.jar /host_repo/upstream
             cp lib/libopencv_java${{ env.OPENCV_VERSION_SHORT }}.so /host_repo/src/main/resources/nu/pattern/opencv/linux/ARMv8
-
+  
             # Peform a test build in the host repo, which now contains all of the
             # build artifacts.
             cd /host_repo
@@ -221,22 +230,22 @@ jobs:
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ubuntu-18.04-arm64
           path: |
             artifacts/bin/opencv-${{ env.OPENCV_VERSION_SHORT }}.jar
             artifacts/lib/libopencv_java${{ env.OPENCV_VERSION_SHORT }}.so
-
-
-
+  
+  
+  
 
   # Build native libraries for Linux and Mac. Uploads the libraries
   # as artifacts which are used in subsequent jobs.
   build_mac_linux_x64:
     strategy:
       matrix:
-        os: [ubuntu-18.04, macos-10.15]
-        java: [8]
+        os: [ ubuntu-20.04, macos-10.15 ]
+        java: [ 8 ]
 
     runs-on: ${{ matrix.os }}
 
@@ -259,6 +268,11 @@ jobs:
         run: |
           wget https://github.com/opencv/opencv/archive/${{ env.OPENCV_VERSION }}.zip > /dev/null
           unzip ${{ env.OPENCV_VERSION }} > /dev/null
+
+          wget -O opencv_contrib-${{ env.OPENCV_VERSION }}.zip https://github.com/opencv/opencv_contrib/archive/${{ env.OPENCV_VERSION }}.zip > /dev/null
+          unzip opencv_contrib-${{ env.OPENCV_VERSION }}.zip > /dev/null
+
+          base=${PWD}
           cd opencv-${{ env.OPENCV_VERSION }}
           mkdir build
           cd build
@@ -278,6 +292,7 @@ jobs:
             -D BUILD_opencv_apps=OFF \
             -D BUILD_opencv_gapi=OFF \
             -D CMAKE_BUILD_TYPE=RELEASE \
+            -D OPENCV_EXTRA_MODULES_PATH=${base}/opencv_contrib-${{ env.OPENCV_VERSION }}/modules ${base}/opencv-${{ env.OPENCV_VERSION }} \
             ..
           make -j8
 
@@ -292,7 +307,7 @@ jobs:
 
       - name: Upload Libraries
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: ${{ matrix.os }}
           path: |
             opencv-${{ env.OPENCV_VERSION }}/build/bin/opencv-${{ env.OPENCV_VERSION_SHORT }}.jar
@@ -300,17 +315,12 @@ jobs:
             opencv-${{ env.OPENCV_VERSION }}/build/lib/libopencv_java${{ env.OPENCV_VERSION_SHORT }}.dylib
 
 
-
-
   # Build Apple Silicon Mac native binary.
   # See https://cmake.org/cmake/help/v3.23/variable/CMAKE_APPLE_SILICON_PROCESSOR.html
-  # Currently runs on Jason's Mac using a Github self hosted runner because Github doesn't
-  # yet support runners for Apple Silicon on macOS. 
-  # Requires that the runner machine have, at least, maven and ant installed.
   build_mac_aarch64:
     strategy:
       matrix:
-        java: [18]
+        java: [ 8 ]
     runs-on: [self-hosted, macOS, ARM64]
 
     steps:
@@ -334,6 +344,11 @@ jobs:
         run: |
           wget https://github.com/opencv/opencv/archive/${{ env.OPENCV_VERSION }}.zip > /dev/null
           unzip ${{ env.OPENCV_VERSION }} > /dev/null
+
+          wget -O opencv_contrib-${{ env.OPENCV_VERSION }}.zip https://github.com/opencv/opencv_contrib/archive/${{ env.OPENCV_VERSION }}.zip > /dev/null
+          unzip opencv_contrib-${{ env.OPENCV_VERSION }}.zip > /dev/null
+
+          base=${PWD}
           cd opencv-${{ env.OPENCV_VERSION }}
           mkdir build
           cd build
@@ -355,6 +370,7 @@ jobs:
             -D CMAKE_BUILD_TYPE=RELEASE \
             -D CMAKE_APPLE_SILICON_PROCESSOR=arm64 \
             -D CMAKE_CXX_STANDARD=17 \
+            -D OPENCV_EXTRA_MODULES_PATH=${base}/opencv_contrib-${{ env.OPENCV_VERSION }}/modules ${base}/opencv-${{ env.OPENCV_VERSION }} \
             ..
           make -j8
 
@@ -368,7 +384,7 @@ jobs:
 
       - name: Upload Libraries
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: macos-aarch64
           path: |
             opencv-${{ env.OPENCV_VERSION }}/build/bin/opencv-${{ env.OPENCV_VERSION_SHORT }}.jar
@@ -377,14 +393,14 @@ jobs:
 
 
 
-  # Downloads the Windows distribution from OpenCV, extracts it and uploads
-  # the native libraries as artifacts for use by subsequent jobs. This is
-  # in leiu of building the native libraries on Windows.
+  # Build native libraries for Windows. Uploads the libraries
+  # as artifacts which are used in subsequent jobs.
   build_windows:
     strategy:
       matrix:
-        os: [ubuntu-18.04]
-        java: [15]
+        os: [ windows-2022 ]
+        arch: [ x86_64 ]
+        java: [ 8 ]
 
     runs-on: ${{ matrix.os }}
 
@@ -397,23 +413,70 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
 
+      - name: Visual Studio shell
+        uses: egor-tensin/vs-shell@v2
+
       - name: Get Version Info
+        shell: bash
         run: |
           echo "POM_VERSION=$(mvn build-helper:parse-version org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
           echo "OPENCV_VERSION=$(mvn build-helper:parse-version org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=opencv.version.long -q -DforceStdout)" >> $GITHUB_ENV
           echo "OPENCV_VERSION_SHORT=$(mvn build-helper:parse-version org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=opencv.version.short -q -DforceStdout)" >> $GITHUB_ENV
 
-      - name: Download Windows Distribution
-        run: wget -O opencv-${{ env.OPENCV_VERSION }}.exe https://github.com/opencv/opencv/releases/download/${{ env.OPENCV_VERSION }}/opencv-${{ env.OPENCV_VERSION }}-windows.exe
-
-      - name: Extract Windows Distribution
-        run: 7z x opencv-${{ env.OPENCV_VERSION }}.exe
+      - name: Build OpenCV
+        shell: bash
+        run: |
+          ant_path=$(which ant)
           
+          pip install numpy
+
+          curl -L -o opencv.zip https://github.com/opencv/opencv/archive/${{ env.OPENCV_VERSION }}.zip > /dev/null
+          unzip opencv.zip > /dev/null
+
+          curl -L -o opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/${{ env.OPENCV_VERSION }}.zip > /dev/null
+          unzip opencv_contrib.zip > /dev/null
+
+          base=${PWD}
+          cd opencv-${{ env.OPENCV_VERSION }}
+          mkdir build
+          cd build
+          cmake \
+            -D ANT_EXECUTABLE:FILEPATH=${ant_path} \
+            -D OPENCV_FORCE_3RDPARTY_BUILD=ON \
+            -D BUILD_JAVA=ON \
+            -D BUILD_FAT_JAVA_LIB=ON \
+            -D OPENCV_ENABLE_NONFREE=ON \
+            -D BUILD_SHARED_LIBS=OFF \
+            -D BUILD_PERF_TESTS=OFF \
+            -D BUILD_TESTS=OFF \
+            -D BUILD_EXAMPLES=OFF \
+            -D BUILD_DOCS=OFF \
+            -D BUILD_PACKAGE=OFF \
+            -D BUILD_opencv_python2=OFF \
+            -D BUILD_opencv_python3=OFF \
+            -D BUILD_opencv_apps=OFF \
+            -D BUILD_opencv_gapi=OFF \
+            -D CMAKE_BUILD_TYPE=RELEASE \
+            -D OPENCV_EXTRA_MODULES_PATH=${base}/opencv_contrib-${{ env.OPENCV_VERSION }}/modules \
+            ..
+            cmake --build . --config Release
+
+      - name: Copy Libraries
+        shell: bash
+        run: |
+          cp opencv-${{ env.OPENCV_VERSION }}/build/bin/opencv-${{ env.OPENCV_VERSION_SHORT }}.jar upstream || :
+          cp opencv-${{ env.OPENCV_VERSION }}/build/bin/Release/opencv_java${{ env.OPENCV_VERSION_SHORT }}.dll src/main/resources/nu/pattern/opencv/windows/x86_64/opencv_java${{ env.OPENCV_VERSION_SHORT }}.dll || :
+
+      - name: Build with Maven
+        run: mvn -B test
+
       - name: Upload Libraries
         uses: actions/upload-artifact@v2
-        with: 
-          name: windows-2016
-          path: opencv/build/java
+        with:
+          name: ${{ matrix.os }}
+          path: |
+            opencv-${{ env.OPENCV_VERSION }}/build/bin/opencv-${{ env.OPENCV_VERSION_SHORT }}.jar
+            opencv-${{ env.OPENCV_VERSION }}/build/bin/Release/opencv_java${{ env.OPENCV_VERSION_SHORT }}.dll
 
 
 
@@ -425,8 +488,8 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-18.04]
-        java: [8]
+        os: [ ubuntu-20.04 ]
+        java: [ 8 ]
 
     runs-on: ${{ matrix.os }}
 
@@ -453,18 +516,17 @@ jobs:
           cp macos-10.15/bin/opencv-${{ env.OPENCV_VERSION_SHORT }}.jar upstream
           cp macos-10.15/lib/libopencv_java${{ env.OPENCV_VERSION_SHORT }}.dylib src/main/resources/nu/pattern/opencv/osx/x86_64
           cp macos-aarch64/lib/libopencv_java${{ env.OPENCV_VERSION_SHORT }}.dylib src/main/resources/nu/pattern/opencv/osx/ARMv8
-          cp ubuntu-18.04/lib/libopencv_java${{ env.OPENCV_VERSION_SHORT }}.so src/main/resources/nu/pattern/opencv/linux/x86_64
+          cp ubuntu-20.04/lib/libopencv_java${{ env.OPENCV_VERSION_SHORT }}.so src/main/resources/nu/pattern/opencv/linux/x86_64
           cp ubuntu-18.04-arm/lib/libopencv_java${{ env.OPENCV_VERSION_SHORT }}.so src/main/resources/nu/pattern/opencv/linux/ARMv7
           cp ubuntu-18.04-arm64/lib/libopencv_java${{ env.OPENCV_VERSION_SHORT }}.so src/main/resources/nu/pattern/opencv/linux/ARMv8
-          cp windows-2016/x86/opencv_java${{ env.OPENCV_VERSION_SHORT }}.dll src/main/resources/nu/pattern/opencv/windows/x86_32
-          cp windows-2016/x64/opencv_java${{ env.OPENCV_VERSION_SHORT }}.dll src/main/resources/nu/pattern/opencv/windows/x86_64
+          cp windows-2022/Release/opencv_java${{ env.OPENCV_VERSION_SHORT }}.dll src/main/resources/nu/pattern/opencv/windows/x86_64/
 
       - name: Build with Maven
         run: mvn -B install
 
       - name: Upload Distribution
         uses: actions/upload-artifact@v2
-        with: 
+        with:
           name: dist
           path: target/opencv*
 
@@ -479,8 +541,8 @@ jobs:
     needs: build_dist
     strategy:
       matrix:
-        os: [macos-10.15, windows-2019, ubuntu-20.04, ubuntu-18.04]
-        java: [8, 9, 10, 11, 12, 13, 14, 15]
+        os: [ macos-10.15, windows-2022, ubuntu-20.04 ]
+        java: [ 8, 9, 10, 11, 12, 13, 14, 15 ]
 
     runs-on: ${{ matrix.os }}
 
@@ -519,8 +581,8 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-18.04]
-        java: [8]
+        os: [ ubuntu-20.04 ]
+        java: [ 8 ]
 
     runs-on: ${{ matrix.os }}
 
@@ -552,11 +614,10 @@ jobs:
           cp macos-10.15/bin/opencv-${{ env.OPENCV_VERSION_SHORT }}.jar upstream
           cp macos-10.15/lib/libopencv_java${{ env.OPENCV_VERSION_SHORT }}.dylib src/main/resources/nu/pattern/opencv/osx/x86_64
           cp macos-aarch64/lib/libopencv_java${{ env.OPENCV_VERSION_SHORT }}.dylib src/main/resources/nu/pattern/opencv/osx/ARMv8
-          cp ubuntu-18.04/lib/libopencv_java${{ env.OPENCV_VERSION_SHORT }}.so src/main/resources/nu/pattern/opencv/linux/x86_64
+          cp ubuntu-20.04/lib/libopencv_java${{ env.OPENCV_VERSION_SHORT }}.so src/main/resources/nu/pattern/opencv/linux/x86_64
           cp ubuntu-18.04-arm/lib/libopencv_java${{ env.OPENCV_VERSION_SHORT }}.so src/main/resources/nu/pattern/opencv/linux/ARMv7
           cp ubuntu-18.04-arm64/lib/libopencv_java${{ env.OPENCV_VERSION_SHORT }}.so src/main/resources/nu/pattern/opencv/linux/ARMv8
-          cp windows-2016/x86/opencv_java${{ env.OPENCV_VERSION_SHORT }}.dll src/main/resources/nu/pattern/opencv/windows/x86_32
-          cp windows-2016/x64/opencv_java${{ env.OPENCV_VERSION_SHORT }}.dll src/main/resources/nu/pattern/opencv/windows/x86_64
+          cp windows-2022/libopencv_java${{ env.OPENCV_VERSION_SHORT }}.dll src/main/resources/nu/pattern/opencv/windows/x86_64/opencv_java${{ env.OPENCV_VERSION_SHORT }}.dll
 
       - name: Publish to Apache Maven Central
         run: mvn -B -e clean deploy -P release-sign-artifacts
@@ -564,7 +625,3 @@ jobs:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
-
-
-
-
