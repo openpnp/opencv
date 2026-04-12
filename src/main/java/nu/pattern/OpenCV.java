@@ -360,13 +360,13 @@ public class OpenCV {
       case LINUX:
         switch (arch) {
           case X86_64:
-            location = "/nu/pattern/opencv/linux/x86_64/libopencv_java490.so";
+            location = "/nu/pattern/opencv/linux/x86_64/libopencv_java4100.so";
             break;
           case ARMv7:
-            location = "/nu/pattern/opencv/linux/ARMv7/libopencv_java490.so";
+            location = "/nu/pattern/opencv/linux/ARMv7/libopencv_java4100.so";
             break;
           case ARMv8:
-            location = "/nu/pattern/opencv/linux/ARMv8/libopencv_java490.so";
+            location = "/nu/pattern/opencv/linux/ARMv8/libopencv_java4100.so";
             break;
           default:
             throw new UnsupportedPlatformException(os, arch);
@@ -375,10 +375,10 @@ public class OpenCV {
       case OSX:
         switch (arch) {
           case X86_64:
-            location = "/nu/pattern/opencv/osx/x86_64/libopencv_java490.dylib";
+            location = "/nu/pattern/opencv/osx/x86_64/libopencv_java4100.dylib";
             break;
           case ARMv8:
-            location = "/nu/pattern/opencv/osx/ARMv8/libopencv_java490.dylib";
+            location = "/nu/pattern/opencv/osx/ARMv8/libopencv_java4100.dylib";
             break;
           default:
             throw new UnsupportedPlatformException(os, arch);
@@ -387,10 +387,10 @@ public class OpenCV {
       case WINDOWS:
           switch (arch) {
             case X86_32:
-              location = "/nu/pattern/opencv/windows/x86_32/opencv_java490.dll";
+              location = "/nu/pattern/opencv/windows/x86_32/opencv_java4100.dll";
               break;
             case X86_64:
-              location = "/nu/pattern/opencv/windows/x86_64/opencv_java490.dll";
+              location = "/nu/pattern/opencv/windows/x86_64/opencv_java4100.dll";
               break;
             default:
               throw new UnsupportedPlatformException(os, arch);
